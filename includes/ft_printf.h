@@ -6,7 +6,7 @@
 /*   By: soyster <soyster@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 01:18:14 by soyster           #+#    #+#             */
-/*   Updated: 2020/02/05 17:59:58 by mleticia         ###   ########.fr       */
+/*   Updated: 2020/02/14 20:52:56 by soyster          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,31 @@ typedef struct	s_flar
 	int			width; // ширина
 	int			precision; //точность
 	int			length; //длина 1 - h, 2 - hh, 3 - l, 4 - ll, 5 - L
-	
 	char		specifier; //спецификатор
+	long double	f; // храниться флот
 }				t_flag;
 
+typedef union			u_double
+{
+   long double			ld;
+   struct
+   {
+      unsigned long int	mant : 64;
+      unsigned int		expon : 15;
+      unsigned int		sign : 1;
+   }					s_parts;
+}						t_double;
+
+typedef struct			s_mant_list 
+{
+	unsigned long		base_list;
+	struct s_mant_list	*next;
+}						t_mant_list;
+
+
+void	ft_spec_f(va_list all_arg, t_flag *all_mod);
 int		ft_spec_x(t_flag *all_mod, char *pointer);
-int	ft_spec_p(t_flag *all_mod, char *pointer);
+int		ft_spec_p(t_flag *all_mod, char *pointer);
 void	ft_percent(t_flag *all_mod);
 int		ft_simple_width(int simple_width, int result);
 int		ft_width(t_flag *all_mod, int len);
