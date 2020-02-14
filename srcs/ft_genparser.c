@@ -6,7 +6,7 @@
 /*   By: soyster <soyster@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 00:57:33 by soyster           #+#    #+#             */
-/*   Updated: 2020/02/03 14:51:57 by soyster          ###   ########.fr       */
+/*   Updated: 2020/02/06 16:41:27 by soyster          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,10 @@ t_flag *ft_fill_struct(t_flag *all_mod, const char *format, size_t len) //зап
     all_mod->flag_pl = '0';
     all_mod->flag_sp = '0';
     all_mod->width = 0;
-	all_mod->precision = -1; //?!?!
+	all_mod->precision = -1; 
 	all_mod->length = 0;
     all_mod->specifier = '0';
+	all_mod->f = '0';	//??
     return (all_mod);
 }
 
@@ -53,9 +54,10 @@ t_flag  *ft_free_allmod(t_flag *all_mod) //чистит флаги и специ
     all_mod->flag_pl = '0';
     all_mod->flag_sp = '0';
     all_mod->width = 0;
-	all_mod->precision = -1; //?!?!
+	all_mod->precision = -1; 
 	all_mod->length = 0;
     all_mod->specifier = '0';
+	all_mod->f = '0'; //??
     return (all_mod);
 }
 

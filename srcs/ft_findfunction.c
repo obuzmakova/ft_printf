@@ -99,7 +99,7 @@ int ft_findfunction(va_list all_arg, t_flag *all_mod)
     if (all_mod->specifier == 's')
         ft_spec_s(all_arg, all_mod);
     if ((all_mod->specifier == 'd') || (all_mod->specifier == 'i') || (all_mod->specifier == 'u'))
-            ft_itoa_base(all_arg, all_mod, 10);
+        ft_itoa_base(all_arg, all_mod, 10);
     if (all_mod->specifier == 'b')
         ft_itoa_base(all_arg, all_mod, 2);
     if (all_mod->specifier == 'o')
@@ -108,5 +108,7 @@ int ft_findfunction(va_list all_arg, t_flag *all_mod)
         ft_itoa_base(all_arg, all_mod, 16);
 	if (all_mod->specifier == '%')
 		ft_percent(all_mod);
+	if (all_mod->specifier == 'f')
+		ft_spec_f(all_arg, all_mod);
     return(0);
 }
