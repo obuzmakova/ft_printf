@@ -4,13 +4,16 @@
 
 #include "../includes/ft_printf.h"
 
-int	ft_widthx(int width, int len, int prec)
+int	ft_widthx(int len, char c)
 {
-	while (width > len)
+	int res;
+
+	res = len;
+	/*while (width > len)
 	{
 		if (width > prec && prec >= 0)
 			write(1, " ", 1);
-		else
+		else if (width > prec)
 			write(1, "0", 1);
 		width--;
 	}
@@ -18,41 +21,38 @@ int	ft_widthx(int width, int len, int prec)
 	{
 		write(1, "0", 1);
 		prec--;
+	}*/
+	while (len > 0)
+	{
+		write (1, &c, 1);
+		len--;
 	}
-	return (0);
+	return (res);
 }
 
-int	ft_spec_x(t_flag *all_mod, char *pointer)
+int	ft_spec_x(t_flag *all_mod, long long num, int len, char *base_string)
 {
-	int len;
-	int len_width;
-
-	len = ft_strlen(pointer);
-	len_width = len;
-	if (all_mod->precision == 0 && !all_mod->width) // ?!?!
-		return (0);				 //?!?!
-	if (all_mod->precision == 0 && all_mod->width)
+	if (all_mod->width > all_mod->precision && all_mod->width > len && all_mod->flag_0 == 'N')
+		return(ft_widthx(all_mod->width - len, '0'));
+	else if (all_mod->width > all_mod->precision && all_mod->width > len && all_mod->precision == -1)
+		return(ft_widthx(all_mod->width - len, ' '));
+	else if ((all_mod->width > all_mod->precision && all_mod->width > len) && \
+		(all_mod->width - all_mod->precision > all_mod->width - len))
+		return(ft_widthx(all_mod->width - len, ' '));
+	else if (all_mod->width - all_mod->precision > len && all_mod->flag_min != '-')
 	{
-		ft_simple_width(all_mod->width, all_mod->result);
-		return (0);
+		all_mod->result += ft_widthx(all_mod->width - all_mod->precision, ' ');
+		return(ft_widthx(all_mod->precision - len, '0'));
 	}
-	else if (all_mod->flag_min != '-')
+	else if (all_mod->precision > 0)
+		return(ft_widthx(all_mod->precision - len, '0'));
+	if (all_mod->flag_sh == '#')
 	{
-		if (all_mod->flag_0 == 'N')
-			ft_widthx(all_mod->width, len_width, all_mod->precision);
-		else if(all_mod->precision > 0)
-			ft_widthx(all_mod->width, len_width, all_mod->precision);
+		if(all_mod->specifier == 'x')
+			write(1, "0x", 2);
 		else
-			ft_widthx(all_mod->width, len_width, 0);
+			write(1, "0X", 2);
+		return(2);
 	}
-	//if (all_mod->precision > 0 && all_mod->precision > len && all_mod->width == 0)
-	// 	ft_widthx(all_mod->width, len_width, all_mod->precision);
-	ft_putstr_len(pointer, len);
-	if (all_mod->flag_min == '-')
-	{
-		len = all_mod->width - len_width;
-		ft_widthx(all_mod->width, len_width, 0);
-	}
-	all_mod->result = all_mod->result + len; // результат сделать
-	return (0);
+	return(0);
 }
