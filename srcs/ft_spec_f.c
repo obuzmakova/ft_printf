@@ -6,7 +6,7 @@
 /*   By: soyster <soyster@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 01:18:14 by soyster           #+#    #+#             */
-/*   Updated: 2020/02/19 21:09:46 by soyster          ###   ########.fr       */
+/*   Updated: 2020/02/20 21:18:47 by soyster          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,17 +97,21 @@ void	ft_spec_f(va_list all_arg, t_flag *all_mod)
 		all_mod->fractional[all_mod->index] = (int)(num_end * 10);
 		//fractional[index] = 1;
 		//ft_printf("%i", fractional[index]); //поменять на наш printf
-		num_end = (num_end) * 10 - all_mod->fractional[all_mod->index];
+		num_end = num_end * 10;
+		num_end = num_end - all_mod->fractional[all_mod->index];
 		all_mod->index++;
 	}
 	//index--;
-	if ((int)(num_end * 10) > 4)
+	//if (all_mod->length == 3 && (int)(num_end * 100) % 10 == 9) //
+	//	num_end = num_end + 0.01; //
 	{
-		all_mod->index--;
-		if (ft_rounding(all_mod))
-			num_start = num_start + 1;
+		if ((int)(num_end * 10) > 4) 
+		{
+			all_mod->index--;
+			if (ft_rounding(all_mod))
+				num_start = num_start + 1;
+		}
 	}
-
 	if (all_mod->precision == 0)
 	{
 		if (all_mod->fractional[k] > 4)
@@ -123,6 +127,8 @@ void	ft_spec_f(va_list all_arg, t_flag *all_mod)
 
 	if (all_mod->flag_min == '-')
 	{
+		if (all_mod->flag_sp == 'S' && !check_sign) //
+			write(1, " ", 1); //
 		if (check_sign == 1)
 			write(1, "-", 1);
 		if (all_mod->flag_pl == '+' && !check_sign)
@@ -138,12 +144,15 @@ void	ft_spec_f(va_list all_arg, t_flag *all_mod)
 		}
 	}
 	
+	if (all_mod->flag_sp == 'S' && !check_sign && all_mod->flag_pl == '0' && all_mod->flag_min != '-') //
+		write(1, " ", 1); //
+
 	if (all_mod->width)
 	{
 		len_whole = ft_len_whole(num_start);
 		while (all_mod->width > len_whole + (all_mod->precision != 0 ? + all_mod->precision : + 0) + (all_mod->precision != 0 ? + 1 : + 0) + 
-		((check_sign == 1 || all_mod->flag_pl == '+') ? + 1 : + 0) + ((all_mod->flag_sh == '#' && all_mod->precision == 0) ? + 1 : + 0))
-		//+ (all_mod->flag_sp != 'S' ? + 0 : + 1))
+		((check_sign == 1 || all_mod->flag_pl == '+') ? + 1 : + 0) + ((all_mod->flag_sh == '#' && all_mod->precision == 0) ? + 1 : + 0)
+		+ ((all_mod->flag_sp == 'S' && !check_sign) ? + 1 : + 0)) //
 		{
 			if (all_mod->flag_0 != 'N' || (all_mod->flag_0 == 'N' && all_mod->flag_min == '-'))
 			{
@@ -181,5 +190,5 @@ void	ft_spec_f(va_list all_arg, t_flag *all_mod)
 
 	
 	//printf("%", fractional);
-	//printf("%i", LDBL_DIG); // количество заничмых чисел
+	//printf("%i", DBL_DIG); // количество заничмых чисел
 }
