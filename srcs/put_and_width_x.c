@@ -4,6 +4,8 @@ int	ft_wx(int len, char c)
 {
 	int res;
 
+	if (len < 0)
+		return (0);
 	res = len;
 	while (len > 0)
 	{
@@ -36,4 +38,7 @@ int ft_sharp(t_flag *all_mod, int len)
 		write(1, "0X", 2);
 	if (all_mod->prc > len - 2)
 		all_mod->res += ft_wx(all_mod->prc - len + 2, '0');
+	else if(all_mod->prc == -1 && all_mod->width > len && all_mod->f_0 == 'N' \
+	&& all_mod->f_min == '0')
+		all_mod->res += ft_wx(all_mod->width - len, '0');
 }

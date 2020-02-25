@@ -55,7 +55,7 @@ long long	ft_findtype(va_list all_arg, t_flag *all_mod)
 		return (va_arg(all_arg, int));
 }
 
-void		*ft_itoa_base(va_list all_arg, t_flag *all_mod, int base)
+int		*ft_itoa_base(va_list all_arg, t_flag *all_mod, int base)
 {
 	int			len;
 	long long	nbr;
@@ -68,11 +68,18 @@ void		*ft_itoa_base(va_list all_arg, t_flag *all_mod, int base)
 	all_mod->res = all_mod->res + len;
 	if (*sign == '-')
 		write(1, sign, 1);
+	if (nbr == 0 && all_mod->width == 0 && all_mod->prc == 0)
+	{
+		all_mod->res -= 1;
+		return (0);
+	}
 	if (nbr == 0 && all_mod->width <= 0 && all_mod->prc <= 0)
 	{
 		write(1, "0", 1);
 		return (&all_mod->res);
 	}
+	if (all_mod->spc == 'p')
+		ft_spec_p(all_mod, nbr, base, len);
 	ft_findout(all_mod, nbr, base, len);
 }
 

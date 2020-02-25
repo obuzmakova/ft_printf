@@ -1,20 +1,13 @@
 #include "../includes/ft_printf.h"
 
-void	ft_putnum(t_flag *all_mod, long long num, int base, int len)
+void		ft_put_dec(t_flag *all_mod, long long num, int base)
 {
-	size_t	dec;
 	int		curr;
 	char	*base_string;
+	size_t	dec;
 
-	base_string = all_mod->spc == 'X' ? "0123456789ABCDEF" : "0123456789abcdef";
 	dec = 1;
-	if (all_mod->f_sh == '#' && num != 0)
-		ft_sharp(all_mod, len);
-	else if (all_mod->f_min != '-' && len == 1 && all_mod->prc > 0)
-		all_mod->res += ft_wx(all_mod->prc - 1, '0');
-	if (all_mod->width > len && all_mod->f_0 == 'N' && all_mod->f_sh == '#' && \
-	all_mod->prc == -1)
-		all_mod->res += ft_wx(all_mod->width - len, '0');
+	base_string = all_mod->spc == 'X' ? "0123456789ABCDEF" : "0123456789abcdef";
 	while ((dec * base < num) && dec < dec * base && (dec * base > 0))
 		dec *= base;
 	while (dec > 0)
@@ -26,6 +19,23 @@ void	ft_putnum(t_flag *all_mod, long long num, int base, int len)
 		num %= dec;
 		dec /= base;
 	}
+}
+
+void	ft_putnum(t_flag *all_mod, long long num, int base, int len)
+{
+	if (all_mod->f_sh == '#' && num != 0)
+		ft_sharp(all_mod, len);
+	else if (all_mod->f_min != '-' && len == 1 && all_mod->prc > 0)
+		all_mod->res += ft_wx(all_mod->prc - 1, '0');
+	else if (all_mod->width > len && all_mod->f_0 == 'N' \
+	&& all_mod->f_sh == '#' && all_mod->prc == -1)
+		all_mod->res += ft_wx(all_mod->width - len, '0');
+	if (num == 0 && all_mod->prc == 0)
+	{
+		ft_wx(len, ' ');
+		return ;
+	}
+	ft_put_dec(all_mod, num, base);
 }
 
 int		ft_spec_x(t_flag *all_mod, int len)
@@ -75,7 +85,7 @@ int		ft_spec_x_add(t_flag *all_mod, int len)
 		all_mod->res += ft_wx(all_mod->width - all_mod->prc + len, '0');
 		return (ft_wx(all_mod->width - all_mod->prc, ' '));
 	}
-	else if (len > all_mod->prc && all_mod->prc > -1)
+	else if (len > all_mod->prc && all_mod->f_min == '-')
 		return (ft_wx(all_mod->width - len, ' '));
 	else if (all_mod->prc > -1 && all_mod->f_sh == '#')
 		return (ft_wx(all_mod->width - all_mod->prc - 2, ' '));
