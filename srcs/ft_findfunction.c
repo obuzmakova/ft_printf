@@ -49,7 +49,7 @@ long long		ft_findtype(va_list all_arg, t_flag *all_mod)
 		return ((unsigned char)va_arg(all_arg, int));
 	if (all_mod->length == 3 && ft_memchr("oxXu", (int)all_mod->spc, 4))
 		return ((unsigned long)va_arg(all_arg, unsigned long));
-	if (all_mod->length == 4 && ft_memchr("oxXu", (int)all_mod->spc, 4))
+	if (all_mod->length == 4 && ft_memchr("oxXub", (int)all_mod->spc, 5))
 		return ((unsigned long long)va_arg(all_arg, unsigned long long));
 	if (all_mod->spc == 'p')
 		return (uintptr_t)(va_arg(all_arg, void*));
