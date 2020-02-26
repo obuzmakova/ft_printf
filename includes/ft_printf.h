@@ -6,7 +6,7 @@
 /*   By: soyster <soyster@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 01:18:14 by soyster           #+#    #+#             */
-/*   Updated: 2020/02/25 17:12:58 by mleticia         ###   ########.fr       */
+/*   Updated: 2020/02/26 17:59:48 by mleticia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ typedef struct			s_mant_list //убрать
 
 int		ft_rounding(t_flag *all_mod);
 void	ft_spec_f(va_list all_arg, t_flag *all_mod);
+void	ft_outzero(t_flag *all_mod);
 int	ft_spec_x(t_flag *all_mod, int len);
 int	ft_wx(int len, char c);
 int ft_sharp(t_flag *all_mod, int len);

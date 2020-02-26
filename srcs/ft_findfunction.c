@@ -5,6 +5,8 @@ int				ft_writespec(t_flag *all_mod, int check, long long nbr)
 	if ((all_mod->spc == 'x' || all_mod->spc == 'X') && nbr != 0 \
 	&& all_mod->f_sh == '#')
 		return (2);
+	if (all_mod->spc == 'o' && nbr != 0 && all_mod->f_sh == '#')
+		return(1);
 	return (0);
 }
 
@@ -69,16 +71,15 @@ int				*ft_itoa_base(va_list all_arg, t_flag *all_mod, int base)
 	nbr < 0 ? nbr *= -1 : nbr;
 	all_mod->res = all_mod->res + len;
 	(*sign == '-') ? write(1, sign, 1) : 0;
-	if (nbr == 0 && all_mod->width == 0 && all_mod->prc == 0)
+	/*if (nbr == 0 && all_mod->spc == 'o' && all_mod->prc < 0)
 	{
-		all_mod->res -= 1;
-		return (0);
-	}
-	if (nbr == 0 && all_mod->width <= 0 && all_mod->prc <= 0 \
-	&& all_mod->spc != 'p')
+			ft_outzero(all_mod);
+			return(&all_mod->res);
+	}*/
+	if (nbr == 0 && all_mod->width <= 0 && all_mod->prc <= 0)
 	{
-		write(1, "0", 1);
-		return (&all_mod->res);
+		ft_outzero(all_mod);
+		return(&all_mod->res);
 	}
 	if (all_mod->spc == 'p')
 		ft_spec_p(all_mod, nbr, base, len);

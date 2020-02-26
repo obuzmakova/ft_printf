@@ -87,7 +87,7 @@ int			ft_spec_x_add(t_flag *all_mod, int len)
 	}
 	else if (len > all_mod->prc && all_mod->f_min == '-')
 		return (ft_wx(all_mod->width - len, ' '));
-	else if (all_mod->prc > -1 && all_mod->f_sh == '#')
+	else if (all_mod->prc > -1 && all_mod->f_sh == '#' && all_mod->spc != 'o')
 		return (ft_wx(all_mod->width - all_mod->prc - 2, ' '));
 	else if (all_mod->prc > -1)
 		return (ft_wx(all_mod->width - all_mod->prc, ' '));
@@ -97,7 +97,7 @@ int			ft_spec_x_add(t_flag *all_mod, int len)
 
 void		ft_findout(t_flag *all_mod, long long num, int base, int len)
 {
-	if (ft_memchr("oxXu", (int)all_mod->spc, 4))
+	if (ft_memchr("oxXub", (int)all_mod->spc, 5))
 	{
 		if (all_mod->width > all_mod->prc && all_mod->width > len \
 		&& all_mod->prc > 0 && all_mod->f_min != '-')
