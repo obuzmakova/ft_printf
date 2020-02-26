@@ -65,6 +65,7 @@ int			ft_spec_x(t_flag *all_mod, int len)
 		return (ft_wx(all_mod->prc - len, ' '));
 	else if (all_mod->prc > 0 && len != 1)
 		return (ft_wx(all_mod->prc - len, '0'));
+	return (0); // nadya
 }
 
 int			ft_spec_x_add(t_flag *all_mod, int len)

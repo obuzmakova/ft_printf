@@ -6,7 +6,7 @@
 /*   By: soyster <soyster@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 00:57:33 by soyster           #+#    #+#             */
-/*   Updated: 2020/02/25 11:53:58 by mleticia         ###   ########.fr       */
+/*   Updated: 2020/02/26 21:42:54 by soyster          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ int	ft_flags(va_list all_arg, t_flag *all_mod)
         if (all_mod->format[all_mod->i] == '-')
 	    	all_mod->f_min = '-';
 	    if (all_mod->format[all_mod->i] == '+')
-	    	all_mod->flag_pl = '+';
+	    	all_mod->f_pl = '+';
 	    if (all_mod->format[all_mod->i] == ' ')
-		    all_mod->flag_sp = 'S';
+		    all_mod->f_sp = 'S';
         all_mod->i++;
     }
 //    printf("flags = %c%c%c%c%c\n", all_mod->flag_sh, all_mod->flag_0, all_mod->flag_min, \
@@ -81,21 +81,21 @@ int	ft_length(va_list all_arg, t_flag *all_mod)
     while (all_mod->format[all_mod->i] == 'h' || all_mod->format[all_mod->i] \
     == 'l' || all_mod->format[all_mod->i] == 'L')
 	{
-		if (all_mod->length == 1 || all_mod->length == 3)
+		if (all_mod->len == 1 || all_mod->len == 3)
 		{
-			if (all_mod->length == 1)
-				all_mod->length = 2;
+			if (all_mod->len == 1)
+				all_mod->len = 2;
 			else
-				all_mod->length = 4;
+				all_mod->len = 4;
 		}
 		else
 		{		
 			if (all_mod->format[all_mod->i] == 'h')
-				all_mod->length = 1;
+				all_mod->len = 1;
 			if (all_mod->format[all_mod->i] == 'l')
-				all_mod->length = 3;
+				all_mod->len = 3;
 			if (all_mod->format[all_mod->i] == 'L')
-				all_mod->length = 5;
+				all_mod->len = 5;
 		}
 		all_mod->i++;
 	}

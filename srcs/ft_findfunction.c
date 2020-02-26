@@ -37,21 +37,21 @@ size_t			count_for_len(long long nbr, int base, t_flag *all_mod)
 
 long long		ft_findtype(va_list all_arg, t_flag *all_mod)
 {
-	if (all_mod->length == 2 && ft_memchr("di", (int)all_mod->spc, 2))
+	if (all_mod->len == 2 && ft_memchr("di", (int)all_mod->spc, 2))
 		return ((short)va_arg(all_arg, int));
-	if (all_mod->length == 3 && ft_memchr("di", (int)all_mod->spc, 2))
+	if (all_mod->len == 3 && ft_memchr("di", (int)all_mod->spc, 2))
 		return ((long)va_arg(all_arg, long));
-	if (all_mod->length == 4 && ft_memchr("di", (int)all_mod->spc, 2))
+	if (all_mod->len == 4 && ft_memchr("di", (int)all_mod->spc, 2))
 		return ((long long)va_arg(all_arg, long long));
-	if (!all_mod->length && ft_memchr("oxXu", (int)all_mod->spc, 4))
+	if (!all_mod->len && ft_memchr("oxXu", (int)all_mod->spc, 4))
 		return ((unsigned int)va_arg(all_arg, unsigned int));
-	if (all_mod->length == 1 && ft_memchr("oxXu", (int)all_mod->spc, 4))
+	if (all_mod->len == 1 && ft_memchr("oxXu", (int)all_mod->spc, 4))
 		return ((unsigned short)va_arg(all_arg, int));
-	if (all_mod->length == 2 && ft_memchr("oxXu", (int)all_mod->spc, 4))
+	if (all_mod->len == 2 && ft_memchr("oxXu", (int)all_mod->spc, 4))
 		return ((unsigned char)va_arg(all_arg, int));
-	if (all_mod->length == 3 && ft_memchr("oxXu", (int)all_mod->spc, 4))
+	if (all_mod->len == 3 && ft_memchr("oxXu", (int)all_mod->spc, 4))
 		return ((unsigned long)va_arg(all_arg, unsigned long));
-	if (all_mod->length == 4 && ft_memchr("oxXub", (int)all_mod->spc, 5))
+	if (all_mod->len == 4 && ft_memchr("oxXub", (int)all_mod->spc, 5))
 		return ((unsigned long long)va_arg(all_arg, unsigned long long));
 	if (all_mod->spc == 'p')
 		return (uintptr_t)(va_arg(all_arg, void*));
@@ -85,6 +85,7 @@ int				*ft_itoa_base(va_list all_arg, t_flag *all_mod, int base)
 		ft_spec_p(all_mod, nbr, base, len);
 	else
 		ft_findout(all_mod, nbr, base, len);
+	return (0); //nadya
 }
 
 size_t			ft_findfunction(va_list all_arg, t_flag *all_mod)
