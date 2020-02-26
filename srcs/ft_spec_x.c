@@ -21,7 +21,7 @@ void		ft_put_dec(t_flag *all_mod, long long num, int base)
 	}
 }
 
-void	ft_putnum(t_flag *all_mod, long long num, int base, int len)
+void		ft_putnum(t_flag *all_mod, long long num, int base, int len)
 {
 	if (all_mod->f_sh == '#' && num != 0)
 		ft_sharp(all_mod, len);
@@ -38,7 +38,7 @@ void	ft_putnum(t_flag *all_mod, long long num, int base, int len)
 	ft_put_dec(all_mod, num, base);
 }
 
-int		ft_spec_x(t_flag *all_mod, int len)
+int			ft_spec_x(t_flag *all_mod, int len)
 {
 	if (all_mod->f_min == '-' && all_mod->prc > len && all_mod->f_sh != '#')
 		return (ft_wx(all_mod->width - (all_mod->prc - len) - len, ' '));
@@ -67,7 +67,7 @@ int		ft_spec_x(t_flag *all_mod, int len)
 		return (ft_wx(all_mod->prc - len, '0'));
 }
 
-int		ft_spec_x_add(t_flag *all_mod, int len)
+int			ft_spec_x_add(t_flag *all_mod, int len)
 {
 	if (all_mod->prc < 1 && all_mod->width > len && all_mod->f_0 == 'N' \
 	&& all_mod->f_sh != '#')
@@ -95,7 +95,7 @@ int		ft_spec_x_add(t_flag *all_mod, int len)
 		return (0);
 }
 
-void	ft_findout(t_flag *all_mod, long long num, int base, int len)
+void		ft_findout(t_flag *all_mod, long long num, int base, int len)
 {
 	if (ft_memchr("oxXu", (int)all_mod->spc, 4))
 	{

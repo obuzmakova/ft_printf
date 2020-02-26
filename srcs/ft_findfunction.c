@@ -1,6 +1,6 @@
 #include "../includes/ft_printf.h"
 
-int			ft_writespec(t_flag *all_mod, int check, long long nbr)
+int				ft_writespec(t_flag *all_mod, int check, long long nbr)
 {
 	if ((all_mod->spc == 'x' || all_mod->spc == 'X') && nbr != 0 \
 	&& all_mod->f_sh == '#')
@@ -8,11 +8,11 @@ int			ft_writespec(t_flag *all_mod, int check, long long nbr)
 	return (0);
 }
 
-size_t		count_for_len(long long nbr, int base, t_flag *all_mod)
+size_t			count_for_len(long long nbr, int base, t_flag *all_mod)
 {
-	int	count;
-	int	copy;
-	int	cpyspec;
+	int		count;
+	int		copy;
+	int		cpyspec;
 
 	count = 0;
 	cpyspec = nbr;
@@ -33,7 +33,7 @@ size_t		count_for_len(long long nbr, int base, t_flag *all_mod)
 	return (count);
 }
 
-long long	ft_findtype(va_list all_arg, t_flag *all_mod)
+long long		ft_findtype(va_list all_arg, t_flag *all_mod)
 {
 	if (all_mod->length == 2 && ft_memchr("di", (int)all_mod->spc, 2))
 		return ((short)va_arg(all_arg, int));
@@ -51,11 +51,13 @@ long long	ft_findtype(va_list all_arg, t_flag *all_mod)
 		return ((unsigned long)va_arg(all_arg, unsigned long));
 	if (all_mod->length == 4 && ft_memchr("oxXu", (int)all_mod->spc, 4))
 		return ((unsigned long long)va_arg(all_arg, unsigned long long));
+	if (all_mod->spc == 'p')
+		return (uintptr_t)(va_arg(all_arg, void*));
 	else
 		return (va_arg(all_arg, int));
 }
 
-int		*ft_itoa_base(va_list all_arg, t_flag *all_mod, int base)
+int				*ft_itoa_base(va_list all_arg, t_flag *all_mod, int base)
 {
 	int			len;
 	long long	nbr;
@@ -66,24 +68,25 @@ int		*ft_itoa_base(va_list all_arg, t_flag *all_mod, int base)
 	len = count_for_len(nbr, base, all_mod);
 	nbr < 0 ? nbr *= -1 : nbr;
 	all_mod->res = all_mod->res + len;
-	if (*sign == '-')
-		write(1, sign, 1);
+	(*sign == '-') ? write(1, sign, 1) : 0;
 	if (nbr == 0 && all_mod->width == 0 && all_mod->prc == 0)
 	{
 		all_mod->res -= 1;
 		return (0);
 	}
-	if (nbr == 0 && all_mod->width <= 0 && all_mod->prc <= 0)
+	if (nbr == 0 && all_mod->width <= 0 && all_mod->prc <= 0 \
+	&& all_mod->spc != 'p')
 	{
 		write(1, "0", 1);
 		return (&all_mod->res);
 	}
 	if (all_mod->spc == 'p')
 		ft_spec_p(all_mod, nbr, base, len);
-	ft_findout(all_mod, nbr, base, len);
+	else
+		ft_findout(all_mod, nbr, base, len);
 }
 
-size_t		ft_findfunction(va_list all_arg, t_flag *all_mod)
+size_t			ft_findfunction(va_list all_arg, t_flag *all_mod)
 {
 	if (all_mod->spc == 'c')
 		ft_spec_c(all_arg, all_mod);
