@@ -31,6 +31,7 @@ static size_t		count_for_len(long long nbr, int base, t_flag *all_mod)
 	if (all_mod->f_sh == '#')
 		(copy != 0) ? count += ft_check(all_mod, spec) : 0;
 	(all_mod->f_pl == '+') ? count += ft_check(all_mod, spec) : 0;
+	all_mod->res = all_mod->res + count;
 	return (count);
 }
 
@@ -71,7 +72,6 @@ static int			*ft_base(va_list all_arg, t_flag *all_mod, int base)
 		sign = nbr >= 0 ? "0" : "-";
 	len = count_for_len(nbr, base, all_mod);
 	nbr < 0 ? nbr *= -1 : nbr;
-	all_mod->res = all_mod->res + len;
 	if (all_mod->spc != 'i' && all_mod->spc != 'd')
 		(*sign == '-') ? ft_sign(all_mod, sign) : 0;
 	if (all_mod->spc != 'p' && nbr == 0 && all_mod->width <= 0 \
@@ -80,12 +80,11 @@ static int			*ft_base(va_list all_arg, t_flag *all_mod, int base)
 		ft_zero(all_mod);
 		return (&all_mod->res);
 	}
-	if (all_mod->spc == 'p')
-		ft_spec_p(all_mod, nbr, base, len);
-	else if (all_mod->spc == 'i' || all_mod->spc == 'd')
-		ft_digit(all_mod, sign, nbr, len);
-	else
-		ft_x(all_mod, nbr, base, len);
+	(all_mod->spc == 'p') ? ft_spec_p(all_mod, nbr, base, len) : 0;
+	(all_mod->spc == 'i' || all_mod->spc == 'd') ? \
+	ft_digit(all_mod, sign, nbr, len) : 0;
+	(ft_memchr("uboXx", (int)all_mod->spc, 5)) ? \
+	ft_x(all_mod, nbr, base, len) : 0;
 	return (0);
 }
 
