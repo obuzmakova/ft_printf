@@ -6,11 +6,32 @@
 /*   By: soyster <soyster@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 00:57:33 by soyster           #+#    #+#             */
-/*   Updated: 2020/02/26 22:36:19 by soyster          ###   ########.fr       */
+/*   Updated: 2020/02/27 21:10:07 by soyster          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
+
+int		ft_flags(va_list all_arg, t_flag *all_mod)
+{
+	while (all_mod->format[all_mod->i] == '#' || \
+	all_mod->format[all_mod->i] == '0' || all_mod->format[all_mod->i] == '-' \
+	|| all_mod->format[all_mod->i] == '+' || all_mod->format[all_mod->i] == ' ')
+	{
+		if (all_mod->format[all_mod->i] == '#')
+			all_mod->f_sh = '#';
+		if (all_mod->format[all_mod->i] == '0')
+			all_mod->f_0 = 'N';
+		if (all_mod->format[all_mod->i] == '-')
+			all_mod->f_min = '-';
+		if (all_mod->format[all_mod->i] == '+')
+			all_mod->f_pl = '+';
+		if (all_mod->format[all_mod->i] == ' ')
+			all_mod->f_sp = 'S';
+		all_mod->i++;
+	}
+	return (0);
+}
 
 int		ft_write_befpercent(va_list all_arg, t_flag *all_mod)
 {
@@ -26,7 +47,7 @@ int		ft_write_befpercent(va_list all_arg, t_flag *all_mod)
 	return (0);
 }
 
-t_flag	*ft_fill_struct(t_flag *all_mod, const char *format, size_t len) //заполнение структуры нолями
+t_flag	*ft_fill_struct(t_flag *all_mod, char *format, size_t len)
 {
 	all_mod->format = (char*)malloc(len * sizeof(char));
 	all_mod->format = format;
@@ -38,14 +59,14 @@ t_flag	*ft_fill_struct(t_flag *all_mod, const char *format, size_t len) //зап
 	all_mod->f_pl = '0';
 	all_mod->f_sp = '0';
 	all_mod->width = 0;
+	all_mod->check_prec = 0;
 	all_mod->prc = -1;
 	all_mod->len = 0;
 	all_mod->spc = '0';
-//	all_mod->f = '0';
 	return (all_mod);
 }
 
-t_flag	*ft_free_allmod(t_flag *all_mod) //чистит флаги и спецификатор
+void	ft_free_allmod(t_flag *all_mod)
 {
 	all_mod->f_sh = '0';
 	all_mod->f_0 = '0';
@@ -53,22 +74,23 @@ t_flag	*ft_free_allmod(t_flag *all_mod) //чистит флаги и специ�
 	all_mod->f_pl = '0';
 	all_mod->f_sp = '0';
 	all_mod->width = 0;
+	all_mod->check_prec = 0;
 	all_mod->prc = -1;
 	all_mod->len = 0;
 	all_mod->spc = '0';
-//	all_mod->f = '0'; //??
-	return (all_mod);
+	return ;
 }
 
-int		ft_gen_parser(va_list all_arg, const char *format) //распределяет по маленьким парсерам
+int		ft_gen_parser(va_list all_arg, char *format)
 {
 	t_flag	*all_mod;
+	int		res;
 
 	all_mod = malloc(sizeof(t_flag));
-	all_mod = ft_fill_struct(all_mod, format, ft_strlen(format)); //заполнение структуры нолями
+	all_mod = ft_fill_struct(all_mod, format, ft_strlen(format));
 	while (all_mod->format[all_mod->i] != '\0')
 	{
-		ft_write_befpercent(all_arg, all_mod); //печатает до процента
+		ft_write_befpercent(all_arg, all_mod);
 		if (!(all_mod->format[all_mod->i]))
 			return (all_mod->res);
 		ft_flags(all_arg, all_mod);
@@ -78,18 +100,6 @@ int		ft_gen_parser(va_list all_arg, const char *format) //распределяе
 		ft_findfunction(all_arg, all_mod);
 		ft_free_allmod(all_mod);
 	}
-	return (all_mod->res); //должен возвращать количество выведенных символов всеми функциями
-}
-
-int		ft_printf(const char *format, ...)
-{
-	va_list	all_arg; //все аргументы после строки формата
-	int		result;
-
-	if (*format == '\0') //валидация на пустой вызов функции
-		return (0);
-	va_start(all_arg, format);
-	result = ft_gen_parser(all_arg, format);
-	va_end(all_arg);
-	return (result); //возвращает количество выведенных символов
+	res = all_mod->res;
+	return (res);
 }
