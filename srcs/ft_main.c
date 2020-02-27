@@ -6,7 +6,7 @@
 /*   By: soyster <soyster@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 01:18:14 by soyster           #+#    #+#             */
-/*   Updated: 2020/02/27 20:43:42 by soyster          ###   ########.fr       */
+/*   Updated: 2020/02/27 23:01:17 by soyster          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,10 @@ int	main(void)
 	//printf("%f\n", -985.765426499); //иногда segfault
 	//ft_printf("%f\n", FLT_MAX);
 	//printf("%f\n", DBL_MAX);
-	//ft_printf("this %.10f float", 1.5);
-	ft_printf("this %f float", 1.5);
+	ft_printf("%.10f float", 1.5);
+	//ft_printf("%-7c", 'w');
+	//printf("%Z\n");
+	//printf("%i\n", ft_printf("%Z"));
+	//printf("%i\n", printf("%Z"));
 	return (0);
 }

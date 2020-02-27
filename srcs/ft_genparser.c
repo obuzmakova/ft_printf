@@ -6,7 +6,7 @@
 /*   By: soyster <soyster@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 00:57:33 by soyster           #+#    #+#             */
-/*   Updated: 2020/02/27 21:10:07 by soyster          ###   ########.fr       */
+/*   Updated: 2020/02/27 23:14:53 by soyster          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,8 @@ int		ft_write_befpercent(va_list all_arg, t_flag *all_mod)
 	return (0);
 }
 
-t_flag	*ft_fill_struct(t_flag *all_mod, char *format, size_t len)
+void	ft_fill_struct(t_flag *all_mod, char *format, size_t len)
 {
-	all_mod->format = (char*)malloc(len * sizeof(char));
 	all_mod->format = format;
 	all_mod->i = 0;
 	all_mod->res = 0;
@@ -63,7 +62,6 @@ t_flag	*ft_fill_struct(t_flag *all_mod, char *format, size_t len)
 	all_mod->prc = -1;
 	all_mod->len = 0;
 	all_mod->spc = '0';
-	return (all_mod);
 }
 
 void	ft_free_allmod(t_flag *all_mod)
@@ -78,28 +76,26 @@ void	ft_free_allmod(t_flag *all_mod)
 	all_mod->prc = -1;
 	all_mod->len = 0;
 	all_mod->spc = '0';
-	return ;
 }
 
 int		ft_gen_parser(va_list all_arg, char *format)
 {
-	t_flag	*all_mod;
+	t_flag	all_mod;
 	int		res;
 
-	all_mod = malloc(sizeof(t_flag));
-	all_mod = ft_fill_struct(all_mod, format, ft_strlen(format));
-	while (all_mod->format[all_mod->i] != '\0')
+	ft_fill_struct(&all_mod, format, ft_strlen(format));
+	while (all_mod.format[all_mod.i] != '\0')
 	{
-		ft_write_befpercent(all_arg, all_mod);
-		if (!(all_mod->format[all_mod->i]))
-			return (all_mod->res);
-		ft_flags(all_arg, all_mod);
-		ft_wid_and_prec(all_arg, all_mod);
-		ft_length(all_arg, all_mod);
-		ft_spec(all_arg, all_mod);
-		ft_findfunction(all_arg, all_mod);
-		ft_free_allmod(all_mod);
+		ft_write_befpercent(all_arg, &all_mod);
+		if (!(all_mod.format[all_mod.i]))
+			return (all_mod.res);
+		ft_flags(all_arg, &all_mod);
+		ft_wid_and_prec(all_arg, &all_mod);
+		ft_length(all_arg, &all_mod);
+		ft_spec(all_arg, &all_mod);
+		ft_findfunction(all_arg, &all_mod);
+		ft_free_allmod(&all_mod);
 	}
-	res = all_mod->res;
+	res = all_mod.res;
 	return (res);
 }
