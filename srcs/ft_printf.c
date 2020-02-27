@@ -14,7 +14,7 @@
 
 int		ft_printf(const char *format, ...)
 {
-	va_list	all_arg;
+	va_list		all_arg;
 	int		result;
 
 	if (*format == '\0')
