@@ -22,6 +22,5 @@ int		ft_printf(const char *format, ...)
 	va_start(all_arg, format);
 	result = ft_gen_parser(all_arg, (char*)format);
 	va_end(all_arg);
-	// while (1) ;
 	return (result);
 }
