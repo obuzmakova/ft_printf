@@ -6,7 +6,7 @@
 /*   By: soyster <soyster@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 01:18:14 by soyster           #+#    #+#             */
-/*   Updated: 2020/02/27 23:01:17 by soyster          ###   ########.fr       */
+/*   Updated: 2020/02/28 23:34:26 by soyster          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,22 @@ int	main(void)
 	//printf("%f\n", -985.765426499); //иногда segfault
 	//ft_printf("%f\n", FLT_MAX);
 	//printf("%f\n", DBL_MAX);
-	ft_printf("%.10f float", 1.5);
-	//ft_printf("%-7c", 'w');
+	//ft_printf("%13.*f float\n", 5, 1.5);
+	//printf("%13.*f float\n", 5, 1.5);
+	//ft_printf("%*.5f float\n", 13, 1.5);
+	//printf("%*.5f float\n", 13, 1.5);
+	//ft_printf("%*.*f float\n", 13, 5, 1.5);
+	//printf("%*.*f float", 13, 5, 1.5);
+	//ft_printf("%s" , "\e[10;31mThis is a blue text.\e[0m");
+	//write(1, "\e[1;32m", 7);
+	//write(1, "\e[35m", 7);
+	//write(1, "lalal", 5);
+	//write(1, "\e[0m", 4);
+	//ft_printf("{black}%s", "5");
+	//ft_printf("{yellow}toto{eoc}{blue}%s{eoc} {purple}%c{eoc} {darkblue}%s{eoc}", "lolo", '8', "Olya");
 	//printf("%Z\n");
 	//printf("%i\n", ft_printf("%Z"));
 	//printf("%i\n", printf("%Z"));
+	ft_printf("%k");
 	return (0);
 }

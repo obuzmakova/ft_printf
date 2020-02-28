@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   spec_k.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: soyster <soyster@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/27 21:03:03 by soyster           #+#    #+#             */
-/*   Updated: 2020/02/28 16:58:28 by soyster          ###   ########.fr       */
+/*   Created: 2020/02/28 23:20:54 by soyster           #+#    #+#             */
+/*   Updated: 2020/02/28 23:35:56 by soyster          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
-int		ft_printf(const char *format, ...)
-{
-	va_list	all_arg;
-	int		result;
+#include <stdio.h>
+#include <time.h>
 
-	if (*format == '\0')
-		return (0);
-	va_start(all_arg, format);
-	result = ft_gen_parser(all_arg, (char*)format);
-	va_end(all_arg);
-	return (result);
+void	ft_spec_k(va_list all_arg, t_flag *all_mod)
+{
+	time_t t = time(NULL);
+ // struct tm tm = *localtime(&t);
+ // ft_printf("now: %d-%02d-%02d %02d:%02d:%02d\n", 
+ // tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
+      ft_printf("local:     %s", asctime(localtime(&t)));
+
+  
 }

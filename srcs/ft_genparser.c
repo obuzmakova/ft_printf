@@ -6,7 +6,7 @@
 /*   By: soyster <soyster@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 00:57:33 by soyster           #+#    #+#             */
-/*   Updated: 2020/02/27 23:14:53 by soyster          ###   ########.fr       */
+/*   Updated: 2020/02/28 22:01:30 by soyster          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,17 @@ int		ft_write_befpercent(va_list all_arg, t_flag *all_mod)
 {
 	while (all_mod->format[all_mod->i] && all_mod->format[all_mod->i] != '%')
 	{
-		write(1, &(all_mod->format[all_mod->i]), 1);
-		all_mod->i++;
-		all_mod->res++;
+		if (all_mod->format[all_mod->i] == '{')
+		{
+			ft_color(all_mod);
+			ft_eoc(all_mod);
+		}
+		else if (all_mod->format[all_mod->i] != '%')
+		{
+			write(1, &(all_mod->format[all_mod->i]), 1);
+			all_mod->i++;
+			all_mod->res++;
+		}
 	}
 	if (!all_mod->format[all_mod->i])
 		return (0);
@@ -93,7 +101,8 @@ int		ft_gen_parser(va_list all_arg, char *format)
 		ft_wid_and_prec(all_arg, &all_mod);
 		ft_length(all_arg, &all_mod);
 		ft_spec(all_arg, &all_mod);
-		ft_function(all_arg, &all_mod);
+		ft_findfunction(all_arg, &all_mod);
+		ft_eoc(&all_mod);
 		ft_free_allmod(&all_mod);
 	}
 	res = all_mod.res;

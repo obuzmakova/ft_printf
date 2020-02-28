@@ -6,7 +6,7 @@
 /*   By: soyster <soyster@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 01:18:14 by soyster           #+#    #+#             */
-/*   Updated: 2020/02/27 22:16:35 by mleticia         ###   ########.fr       */
+/*   Updated: 2020/02/28 23:28:48 by soyster          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,15 @@ typedef struct	s_float
 	int			len_wh;
 }				t_float;
 
-void			ft_digit(t_flag *all_mod, char *sign, long long num, int len);
-void			ft_sign(t_flag *all_mod, char *sign);
+void			ft_spec_k(va_list all_arg, t_flag *all_mod);
+void			ft_color_2(t_flag *all_mod);
+void			ft_eoc(t_flag *all_mod);
+void			ft_color(t_flag *all_mod);
+int				ft_strncmp_st(const char *s1, int k, const char *s2, int n);
+int				ft_gen_parser(va_list all_arg, char *format);
 int				ft_c(int prc, char s);
 int				ft_wid_prec(t_flag *all_mod);
+void			ft_free_fl(t_float	*fl);
 void			ft_putlongnbr(long n, t_flag *all_mod);
 void			ft_print_fl(t_float *fl, t_flag *all_mod);
 int				ft_act_width(t_float *fl, t_flag *all_mod);
@@ -64,17 +69,17 @@ int				ft_float_1(long double f, int prc);
 void			ft_fill_fl(t_float *fl);
 int				ft_rounding(t_float *fl);
 void			ft_spec_f(va_list all_arg, t_flag *all_mod);
-void			ft_zero(t_flag *all_mod);
-void			ft_spec_x(t_flag *all_mod, int len);
+void			ft_outzero(t_flag *all_mod);
+int				ft_spec_x(t_flag *all_mod, int len);
 int				ft_wx(int len, char c);
 int				ft_sharp(t_flag *all_mod, int len);
-void			ft_num(t_flag *all_mod, long long num, int base, int len);
+void			ft_putnum(t_flag *all_mod, long long num, int base, int len);
 int				ft_spec_x_add(t_flag *all_mod, int len);
 void			ft_percent(t_flag *all_mod);
 int				ft_simple_width(int simple_width, t_flag *all_mod);
 int				base_put(t_flag *all_mod, long long num, int base);
 void			ft_putstr_len(char const *str, size_t len_prec,
-							  t_flag *all_mod);
+				t_flag *all_mod);
 int				ft_spec_s(va_list all_arg, t_flag *all_mod);
 int				ft_spec_c(va_list all_arg, t_flag *all_mod);
 int				ft_width(t_flag *all_mod, int len);
@@ -86,8 +91,9 @@ int				ft_spec(va_list all_arg, t_flag *all_mod);
 int				ft_flags(va_list all_arg, t_flag *all_mod);
 int				ft_wid_and_prec(va_list all_arg, t_flag *all_mod);
 int				ft_printf(const char *format, ...);
-int				ft_gen_parser(va_list all_arg, char *format);
-void			ft_x(t_flag *all_mod, long long num, int base, int len);
-size_t			ft_function(va_list all_arg, t_flag *all_mod);
+void			ft_findout(t_flag *all_mod, long long num, int base, int len);
+size_t			ft_findfunction(va_list all_arg, t_flag *all_mod);
+int				*ft_itoa_base(va_list all_arg, t_flag *all_mod, int base);
+size_t			count_for_malloc(long long nbr, int base);
 
 #endif

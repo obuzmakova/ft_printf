@@ -6,7 +6,7 @@
 /*   By: soyster <soyster@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 00:57:33 by soyster           #+#    #+#             */
-/*   Updated: 2020/02/27 21:04:34 by soyster          ###   ########.fr       */
+/*   Updated: 2020/02/28 18:21:48 by soyster          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,20 @@ int	ft_wid_and_prec(va_list all_arg, t_flag *all_mod)
 	int check_prec;
 
 	check_prec = 0;
+	if (all_mod->format[all_mod->i] == '*' &&
+	all_mod->format[all_mod->i + 1] == '.')
+	{
+		all_mod->width = (int)va_arg(all_arg, int);
+		all_mod->i++;
+	}
 	while (ft_isdigit(all_mod->format[all_mod->i]) \
 	|| all_mod->format[all_mod->i] == '.')
 		ft_wid_prec(all_mod);
+	if (all_mod->format[all_mod->i] == '*')
+	{
+		all_mod->prc = (int)va_arg(all_arg, int);
+		all_mod->i = all_mod->i + 1;
+	}
 	return (0);
 }
 

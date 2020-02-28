@@ -82,4 +82,3 @@ void	ft_spec_f(va_list all_arg, t_flag *all_mod)
 	free(fl->frt);
 	free(fl);
 }
-
