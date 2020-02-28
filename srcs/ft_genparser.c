@@ -101,7 +101,7 @@ int		ft_gen_parser(va_list all_arg, char *format)
 		ft_wid_and_prec(all_arg, &all_mod);
 		ft_length(all_arg, &all_mod);
 		ft_spec(all_arg, &all_mod);
-		ft_findfunction(all_arg, &all_mod);
+		ft_function(all_arg, &all_mod);
 		ft_eoc(&all_mod);
 		ft_free_allmod(&all_mod);
 	}
