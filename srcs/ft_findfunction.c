@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_spec_id_1.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mleticia <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/29 20:01:22 by mleticia          #+#    #+#             */
+/*   Updated: 2020/02/29 21:44:19 by mleticia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/ft_printf.h"
 
 static int			ft_check(t_flag *all_mod, long long nbr)
@@ -74,8 +86,8 @@ static int			*ft_base(va_list all_arg, t_flag *all_mod, int base)
 	nbr < 0 ? nbr *= -1 : nbr;
 	if (all_mod->spc != 'i' && all_mod->spc != 'd')
 		(*sign == '-') ? ft_sign(all_mod, sign) : 0;
-	if (all_mod->spc != 'p' && nbr == 0 && all_mod->width <= 0 \
-	&& all_mod->prc <= 0)
+	if (!(ft_memchr("pid", (int)all_mod->spc, 3)) && nbr == 0 && \
+	all_mod->width <= 0 && all_mod->prc <= 0)
 	{
 		ft_zero(all_mod);
 		return (&all_mod->res);

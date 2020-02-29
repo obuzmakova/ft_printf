@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_spec_id_1.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mleticia <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/29 20:01:22 by mleticia          #+#    #+#             */
+/*   Updated: 2020/02/29 20:01:24 by mleticia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/ft_printf.h"
 
 void	to_spec_id(t_flag *all_mod, int len)
@@ -14,7 +26,13 @@ void	to_spec_id(t_flag *all_mod, int len)
 
 void 	ft_negative(t_flag *all_mod, char *sign, int len)
 {
-	all_mod->res += ft_wx(all_mod->width - all_mod->prc - 1, ' ');
+	if ((all_mod->prc <= len && all_mod->f_pl != '+') || (all_mod->f_pl == '+' \
+	&& all_mod->f_0 == 'N' && (*sign == '-') && all_mod->prc < len) || \
+	(all_mod->f_pl == '+' && all_mod->f_0 == 'N' && (*sign != '-') && \
+	all_mod->prc < len))
+		all_mod->res += ft_wx(all_mod->width - all_mod->prc - 2, ' ');
+	else
+		all_mod->res += ft_wx(all_mod->width - all_mod->prc - 1, ' ');
 	if (*sign == '-')
 		write(1, sign, 1);
 	else if (all_mod->f_pl == '+')

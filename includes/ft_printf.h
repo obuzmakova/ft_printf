@@ -6,7 +6,7 @@
 /*   By: soyster <soyster@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 01:18:14 by soyster           #+#    #+#             */
-/*   Updated: 2020/02/29 00:27:36 by mleticia         ###   ########.fr       */
+/*   Updated: 2020/02/29 00:30:46 by mleticia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct	s_float
 	int			len_wh;
 }				t_float;
 
+void			ft_space(t_flag *all_mod, char *sign, int len);
 void			ft_zero(t_flag *all_mod);
 void			ft_sign(t_flag *all_mod, char *sign);
 int				base_put(t_flag *all_mod, long long num, int base);
