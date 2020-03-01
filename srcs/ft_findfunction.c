@@ -6,7 +6,7 @@
 /*   By: mleticia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 20:01:22 by mleticia          #+#    #+#             */
-/*   Updated: 2020/02/29 21:44:19 by mleticia         ###   ########.fr       */
+/*   Updated: 2020/03/01 22:35:37 by mleticia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,26 @@ static int			ft_check(t_flag *all_mod, long long nbr)
 		return (2);
 	if (all_mod->spc == 'o' && nbr != 0 && all_mod->f_sh == '#')
 		return (1);
+	if (all_mod->f_pl == '+' && nbr < 0 && all_mod->prc == -1)
+		return (0);
 	if (all_mod->f_pl == '+')
 		return (1);
 	return (0);
 }
 
-static size_t		count_for_len(long long nbr, int base, t_flag *all_mod)
+static size_t		count_for_len(__int128_t nbr, int base, t_flag *all_mod)
 {
 	int				count;
-	long long		copy;
-	long long		spec;
+	__int128_t		copy;
+	__int128_t		spec;
 
 	count = 0;
 	spec = nbr;
 	copy = nbr;
+	if (all_mod->spc == 'u' && (all_mod->len == 3 || all_mod->len == 4)) {
+		count = count_for_len_llu(nbr, base);
+		return (count);
+	}
 	(nbr < 0 || nbr == 0) ? count += 1 : 0;
 	nbr < 0 ? nbr *= -1 : nbr;
 	while (nbr > 0)
@@ -42,19 +48,21 @@ static size_t		count_for_len(long long nbr, int base, t_flag *all_mod)
 	}
 	if (all_mod->f_sh == '#')
 		(copy != 0) ? count += ft_check(all_mod, spec) : 0;
-	(all_mod->f_pl == '+') ? count += ft_check(all_mod, spec) : 0;
+	(all_mod->f_pl == '+' && all_mod->spc != 'u') ? count += ft_check(all_mod, spec) : 0;
 	all_mod->res = all_mod->res + count;
 	return (count);
 }
 
 static long long	ft_finder(va_list all_arg, t_flag *all_mod)
 {
-	if (all_mod->len == 2 && ft_memchr("di", (int)all_mod->spc, 2))
+	if (all_mod->len == 1 && ft_memchr("di", (int)all_mod->spc, 2))
 		return ((short)va_arg(all_arg, int));
+	if (all_mod->len == 2 && ft_memchr("di", (int)all_mod->spc, 2))
+		return ((signed char)va_arg(all_arg, int));
 	if (all_mod->len == 3 && ft_memchr("di", (int)all_mod->spc, 2))
 		return ((long)va_arg(all_arg, long));
 	if (all_mod->len == 4 && ft_memchr("di", (int)all_mod->spc, 2))
-		return ((long long)va_arg(all_arg, long long));
+		return (va_arg(all_arg, unsigned long long));
 	if (!all_mod->len && ft_memchr("oxXu", (int)all_mod->spc, 4))
 		return ((unsigned int)va_arg(all_arg, unsigned int));
 	if (all_mod->len == 1 && ft_memchr("oxXu", (int)all_mod->spc, 4))
@@ -62,9 +70,9 @@ static long long	ft_finder(va_list all_arg, t_flag *all_mod)
 	if (all_mod->len == 2 && ft_memchr("oxXu", (int)all_mod->spc, 4))
 		return ((unsigned char)va_arg(all_arg, int));
 	if (all_mod->len == 3 && ft_memchr("oxXu", (int)all_mod->spc, 4))
-		return ((unsigned long)va_arg(all_arg, unsigned long));
+		return (va_arg(all_arg, unsigned long long));
 	if (all_mod->len == 4 && ft_memchr("oxXub", (int)all_mod->spc, 5))
-		return ((unsigned long long)va_arg(all_arg, unsigned long long));
+		return (va_arg(all_arg, unsigned long long));
 	if (all_mod->spc == 'p')
 		return (uintptr_t)(va_arg(all_arg, void*));
 	else
@@ -83,6 +91,12 @@ static int			*ft_base(va_list all_arg, t_flag *all_mod, int base)
 	else
 		sign = nbr >= 0 ? "0" : "-";
 	len = count_for_len(nbr, base, all_mod);
+	if (all_mod->spc =='u' && (all_mod->len == 3 || all_mod->len == 4))
+	{
+		all_mod->res += len;
+		ft_llu(all_mod, nbr, base, len);
+		return (0);
+	}
 	nbr < 0 ? nbr *= -1 : nbr;
 	if (all_mod->spc != 'i' && all_mod->spc != 'd')
 		(*sign == '-') ? ft_sign(all_mod, sign) : 0;

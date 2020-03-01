@@ -6,7 +6,7 @@
 /*   By: mleticia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 20:01:22 by mleticia          #+#    #+#             */
-/*   Updated: 2020/03/01 16:30:20 by mleticia         ###   ########.fr       */
+/*   Updated: 2020/03/01 22:33:28 by mleticia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ static void		ft_after_dec(t_flag *all_mod, char *sign, int len)
 		all_mod->res += ft_wx(all_mod->width - len, '0');
 	else if (all_mod->f_sp == 'S' && all_mod->f_0 == 'N' && all_mod->width > len && all_mod->f_min != '-')
 		(all_mod->width - len == 1) ? (all_mod->res += ft_wx(all_mod->width - len, '0')) : (all_mod->res += ft_wx(all_mod->width - len - 1, '0'));
+	//else if (all_mod->f_sp != 'S' && all_mod->f_0 == 'N' && all_mod->prc == -1 && all_mod->prc < len && all_mod->f_pl == '+')
+	//	all_mod->res += ft_wx(all_mod->width - len + 1, '0');
 	else if (all_mod->f_sp != 'S' && all_mod->f_0 == 'N' && (all_mod->prc == -1 || all_mod->prc < len))
 		all_mod->res += ft_wx(all_mod->width - len, '0');
 	else if ((all_mod->f_sp == 'S' && all_mod->width > len && all_mod->f_min != '-') || (all_mod->f_min == '-' && (*sign == '-') && all_mod->prc < len))
@@ -121,7 +123,6 @@ void			ft_digit(t_flag *all_mod, char *sign, long long num, int len)
 	int	base;
 
 	base = 10;
-	//(num == 0) ? ft_zero_id(all_mod, len) : 0;
 	if (all_mod->f_min == '-' && all_mod->f_pl == '+')
 	{
 		ft_doublesign(all_mod, sign, len);

@@ -1,21 +1,35 @@
 #include "../includes/ft_printf.h"
 
-void			ft_put_dec(t_flag *all_mod, long long num, int base)
+void			ft_put_dec(t_flag *all_mod, __int128_t num, int base)
 {
 	int			curr;
 	char		*base_string;
-	long long	dec;
+	__int128_t	dec;
+	__int128_t	i;
 
+	i = 1;
 	dec = 1;
 	base_string = all_mod->spc == 'X' ? "0123456789ABCDEF" : "0123456789abcdef";
 	if (num == 0 && (all_mod->spc == 'i' || all_mod->spc == 'd') && all_mod->width >= 0 && all_mod->prc == 0 && all_mod->check_prec == 1)
 	{
 		if ((all_mod->f_min != '-' && all_mod->width > 1 && all_mod->prc != 0) || (all_mod->f_min == '-' && all_mod->f_pl == '+'))
 			write(1, " ", 1);
+		(all_mod->width == 0) ? all_mod->res-- : 0;
 		return;
 	}
-	while ((dec * base < num) && dec < dec * base && (dec * base > 0))
-		dec *= base;
+	if (all_mod->len == 4)
+	{
+		i = num;
+		i < 0 ? i *= -1 : i;
+		while ((dec * base < i) && (dec * base > 0))
+			dec *= base;
+		num < 0 ? num *= -1 : 0;
+	}
+	else
+	{
+		while ((dec * base < num) && dec < dec * base && (dec * base > 0))
+			dec *= base;
+	}
 	while (dec > 0)
 	{
 		if ((curr = num / dec) == base)
@@ -27,7 +41,7 @@ void			ft_put_dec(t_flag *all_mod, long long num, int base)
 	}
 }
 
-void			ft_num(t_flag *all_mod, long long num, int base, int len)
+void			ft_num(t_flag *all_mod, unsigned long long num, int base, int len)
 {
 	if (all_mod->f_sh == '#' && num != 0)
 		ft_sharp(all_mod, len);
@@ -104,7 +118,7 @@ int				ft_spec_x_add(t_flag *all_mod, int len)
 	return (0);
 }
 
-void			ft_x(t_flag *all_mod, long long num, int base, int len)
+void			ft_x(t_flag *all_mod, unsigned long long num, int base, int len)
 {
 	if (ft_memchr("oxXub", (int)all_mod->spc, 5))
 	{
