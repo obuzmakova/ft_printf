@@ -6,7 +6,7 @@
 /*   By: soyster <soyster@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 00:57:33 by soyster           #+#    #+#             */
-/*   Updated: 2020/02/28 18:21:48 by soyster          ###   ########.fr       */
+/*   Updated: 2020/03/01 23:00:51 by soyster          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,12 @@ int	ft_length(va_list all_arg, t_flag *all_mod)
 int	ft_spec(va_list all_arg, t_flag *all_mod)
 {
 	all_mod->spc = all_mod->format[all_mod->i];
+	if (all_mod->spc != 'c' && all_mod->spc != 's' && all_mod->spc != 'd'
+		&& all_mod->spc != 'i' && all_mod->spc != 'u' && all_mod->spc != 'b'
+		&& all_mod->spc != 'o' && all_mod->spc != 'X' && all_mod->spc != 'x'
+		&& all_mod->spc != '%' && all_mod->spc != 'f' && all_mod->spc != 'k'
+		&& all_mod->spc != 'r' && all_mod->spc != 'p')
+		return (0);
 	all_mod->i++;
 	return (0);
 }
