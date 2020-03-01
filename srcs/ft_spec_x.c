@@ -8,6 +8,12 @@ void			ft_put_dec(t_flag *all_mod, long long num, int base)
 
 	dec = 1;
 	base_string = all_mod->spc == 'X' ? "0123456789ABCDEF" : "0123456789abcdef";
+	if (num == 0 && (all_mod->spc == 'i' || all_mod->spc == 'd') && all_mod->width >= 0 && all_mod->prc == 0 && all_mod->check_prec == 1)
+	{
+		if ((all_mod->f_min != '-' && all_mod->width > 1 && all_mod->prc != 0) || (all_mod->f_min == '-' && all_mod->f_pl == '+'))
+			write(1, " ", 1);
+		return;
+	}
 	while ((dec * base < num) && dec < dec * base && (dec * base > 0))
 		dec *= base;
 	while (dec > 0)
@@ -75,7 +81,7 @@ void			ft_spec_x(t_flag *all_mod, int len)
 int				ft_spec_x_add(t_flag *all_mod, int len)
 {
 	if (all_mod->prc < 1 && all_mod->width > len && all_mod->f_0 == 'N' \
-	&& all_mod->f_sh != '#')
+	&& all_mod->f_sh != '#' && all_mod->f_min != '-')
 		return (ft_wx(all_mod->width - len, '0'));
 	else if ((all_mod->prc < 1 && all_mod->width > len && all_mod->f_0 != 'N') \
 	|| (len > all_mod->prc && all_mod->f_min == '-'))

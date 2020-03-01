@@ -6,7 +6,7 @@
 /*   By: mleticia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 20:01:22 by mleticia          #+#    #+#             */
-/*   Updated: 2020/02/29 20:59:31 by mleticia         ###   ########.fr       */
+/*   Updated: 2020/03/01 16:14:57 by mleticia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void ft_space(t_flag *all_mod, char *sign, int len)
 	else if (all_mod->f_0 == 'N' && (*sign != '-') && all_mod->f_pl != '+' && all_mod->prc == -1)
 		all_mod->res += ft_wx(1, ' ');
 	else if (all_mod->width < len && (*sign != '-') && all_mod->f_pl != '+')
+		all_mod->res += ft_wx(1, ' ');
+	else if (all_mod->width < all_mod->prc && all_mod->prc > 0 && all_mod->width > len && all_mod->f_pl == '0' && all_mod->f_min == '0' && all_mod->f_sh == '0' && all_mod->f_pl == '0')
 		all_mod->res += ft_wx(1, ' ');
 	else
 		return;
