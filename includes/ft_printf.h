@@ -1,3 +1,4 @@
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -53,6 +54,9 @@ typedef struct	s_np
 	int		i;
 }				t_np;
 
+void			ft_put_dec(t_flag *all_mod, __int128_t num, int base);
+void			ft_llu(t_flag *all_mod, unsigned long long num, int base, int len);
+int 			count_for_len_llu(unsigned long long nbr, int base);
 void			ft_putstr_res(char *src, int res, t_flag *all_mod);
 void			ft_np_2(t_np *np, t_flag *all_mod);
 void			ft_np_1(t_np *np, t_flag *all_mod);
@@ -90,11 +94,10 @@ int				ft_float_1(long double f, int prc);
 void			ft_fill_fl(t_float *fl);
 int				ft_rounding(t_float *fl);
 void			ft_spec_f(va_list all_arg, t_flag *all_mod);
-void			ft_put_dec(t_flag *all_mod, long long num, int base);
 void			ft_spec_x(t_flag *all_mod, int len);
 int				ft_wx(int len, char c);
 int				ft_sharp(t_flag *all_mod, int len);
-void			ft_num(t_flag *all_mod, long long num, int base, int len);
+void			ft_num(t_flag *all_mod, unsigned long long num, int base, int len);
 int				ft_spec_x_add(t_flag *all_mod, int len);
 void			ft_percent(t_flag *all_mod);
 int				ft_simple_width(int simple_width, t_flag *all_mod);
@@ -106,13 +109,12 @@ int				ft_spec_c(va_list all_arg, t_flag *all_mod);
 int				ft_width(t_flag *all_mod, int len);
 void			ft_free_allmod(t_flag *all_mod);
 int				ft_spec_p(t_flag *all_mod, long long num, int base, int len);
-void			ft_put_dec(t_flag *all_mod, long long num, int base);
 int				ft_length(va_list all_arg, t_flag *all_mod);
 int				ft_spec(va_list all_arg, t_flag *all_mod);
 int				ft_flags(va_list all_arg, t_flag *all_mod);
 int				ft_wid_and_prec(va_list all_arg, t_flag *all_mod);
 int				ft_printf(const char *format, ...);
-void			ft_x(t_flag *all_mod, long long num, int base, int len);
+void			ft_x(t_flag *all_mod, unsigned long long num, int base, int len);
 size_t			ft_function(va_list all_arg, t_flag *all_mod);
 int				ft_gen_parser(va_list all_arg, char *format);
 

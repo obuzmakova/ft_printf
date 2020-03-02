@@ -127,5 +127,6 @@ size_t				ft_function(va_list all_arg, t_flag *all_mod)
 	(all_mod->spc == '%') ? ft_percent(all_mod) : 0;
 	(all_mod->spc == 'f') ? ft_spec_f(all_arg, all_mod) : 0;
 	(all_mod->spc == 'k') ? ft_spec_k(all_arg, all_mod) : 0;
+	(all_mod->spc == 'r') ? ft_spec_r(all_arg, all_mod) : 0;
 	return (0);
 }

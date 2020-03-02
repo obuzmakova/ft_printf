@@ -6,7 +6,7 @@
 /*   By: mleticia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 20:01:22 by mleticia          #+#    #+#             */
-/*   Updated: 2020/03/01 23:11:00 by mleticia         ###   ########.fr       */
+/*   Updated: 2020/03/02 15:41:42 by mleticia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ void ft_llu(t_flag *all_mod, unsigned long long num, int base, int len)
 		else
 			all_mod->res += ft_wx(all_mod->width - len, ' ');
 	}
-	if (all_mod->prc > all_mod->res)
-			all_mod->res += ft_wx(all_mod->prc - all_mod->res, ' ');
+	if (all_mod->prc > len && all_mod->check_prec == 1)
+			all_mod->res += ft_wx(all_mod->prc - len, '0');
 	while ((dec * base < num) && dec < dec * base && (dec * base > 0))
 		dec *= base;
 	while (dec > 0)
