@@ -6,25 +6,11 @@
 /*   By: mleticia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 20:01:22 by mleticia          #+#    #+#             */
-/*   Updated: 2020/03/01 22:35:37 by mleticia         ###   ########.fr       */
+/*   Updated: 2020/03/02 16:52:21 by mleticia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
-
-static int			ft_check(t_flag *all_mod, long long nbr)
-{
-	if ((all_mod->spc == 'x' || all_mod->spc == 'X') && nbr != 0 \
-	&& all_mod->f_sh == '#')
-		return (2);
-	if (all_mod->spc == 'o' && nbr != 0 && all_mod->f_sh == '#')
-		return (1);
-	if (all_mod->f_pl == '+' && nbr < 0 && all_mod->prc == -1)
-		return (0);
-	if (all_mod->f_pl == '+')
-		return (1);
-	return (0);
-}
 
 static size_t		count_for_len(__int128_t nbr, int base, t_flag *all_mod)
 {
@@ -35,7 +21,8 @@ static size_t		count_for_len(__int128_t nbr, int base, t_flag *all_mod)
 	count = 0;
 	spec = nbr;
 	copy = nbr;
-	if (all_mod->spc == 'u' && (all_mod->len == 3 || all_mod->len == 4)) {
+	if (all_mod->spc == 'u' && (all_mod->len == 3 || all_mod->len == 4))
+	{
 		count = count_for_len_llu(nbr, base);
 		return (count);
 	}
@@ -48,7 +35,8 @@ static size_t		count_for_len(__int128_t nbr, int base, t_flag *all_mod)
 	}
 	if (all_mod->f_sh == '#')
 		(copy != 0) ? count += ft_check(all_mod, spec) : 0;
-	(all_mod->f_pl == '+' && all_mod->spc != 'u') ? count += ft_check(all_mod, spec) : 0;
+	(all_mod->f_pl == '+' && all_mod->spc != 'u') ? \
+	count += ft_check(all_mod, spec) : 0;
 	all_mod->res = all_mod->res + count;
 	return (count);
 }
@@ -79,6 +67,29 @@ static long long	ft_finder(va_list all_arg, t_flag *all_mod)
 		return (va_arg(all_arg, int));
 }
 
+static void			ft_next_for_def(t_flag *all_mod, char *sign, long long nbr,\
+int len)
+{
+	int				base;
+
+	base = 0;
+	if (!(ft_memchr("pid", (int)all_mod->spc, 3)) && nbr == 0 && \
+	all_mod->width <= 0 && all_mod->prc <= 0)
+	{
+		ft_zero(all_mod);
+		return ;
+	}
+	(all_mod->spc == 'p') ? ft_spec_p(all_mod, nbr, len) : 0;
+	(all_mod->spc == 'i' || all_mod->spc == 'd') ? \
+	ft_digit(all_mod, sign, nbr, len) : 0;
+	(all_mod->spc == 'b') ? base = 2 : 0;
+	(all_mod->spc == 'o') ? base = 8 : 0;
+	(all_mod->spc == 'u') ? base = 10 : 0;
+	((all_mod->spc == 'X') || (all_mod->spc == 'x')) ? base = 16 : 0;
+	(ft_memchr("uboXx", (int)all_mod->spc, 5)) ? \
+	ft_x(all_mod, nbr, base, len) : 0;
+}
+
 static int			*ft_base(va_list all_arg, t_flag *all_mod, int base)
 {
 	int				len;
@@ -91,26 +102,20 @@ static int			*ft_base(va_list all_arg, t_flag *all_mod, int base)
 	else
 		sign = nbr >= 0 ? "0" : "-";
 	len = count_for_len(nbr, base, all_mod);
-	if (all_mod->spc =='u' && (all_mod->len == 3 || all_mod->len == 4))
+	if (all_mod->spc == 'u' && (all_mod->len == 3 || all_mod->len == 4))
 	{
-		all_mod->res += len;
 		ft_llu(all_mod, nbr, base, len);
 		return (0);
 	}
 	nbr < 0 ? nbr *= -1 : nbr;
 	if (all_mod->spc != 'i' && all_mod->spc != 'd')
-		(*sign == '-') ? ft_sign(all_mod, sign) : 0;
-	if (!(ft_memchr("pid", (int)all_mod->spc, 3)) && nbr == 0 && \
-	all_mod->width <= 0 && all_mod->prc <= 0)
 	{
-		ft_zero(all_mod);
-		return (&all_mod->res);
+		((*sign == '-') && (!(ft_memchr("di", (int)all_mod->spc, 2) && \
+		all_mod->width > 0 && all_mod->width > all_mod->prc))) ? \
+		write(1, sign, 1) : 0;
 	}
-	(all_mod->spc == 'p') ? ft_spec_p(all_mod, nbr, base, len) : 0;
-	(all_mod->spc == 'i' || all_mod->spc == 'd') ? \
-	ft_digit(all_mod, sign, nbr, len) : 0;
-	(ft_memchr("uboXx", (int)all_mod->spc, 5)) ? \
-	ft_x(all_mod, nbr, base, len) : 0;
+	(ft_memchr("uboXxpid", (int)all_mod->spc, 8)) ? \
+	ft_next_for_def(all_mod, sign, nbr, len) : 0;
 	return (0);
 }
 

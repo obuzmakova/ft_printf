@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_spec_id_1.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mleticia <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/29 20:01:22 by mleticia          #+#    #+#             */
+/*   Updated: 2020/03/02 19:05:16 by mleticia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/ft_printf.h"
 
 void			ft_put_dec(t_flag *all_mod, __int128_t num, int base)
@@ -5,43 +17,31 @@ void			ft_put_dec(t_flag *all_mod, __int128_t num, int base)
 	int			curr;
 	char		*base_string;
 	__int128_t	dec;
-	__int128_t	i;
 
-	i = 1;
 	dec = 1;
 	base_string = all_mod->spc == 'X' ? "0123456789ABCDEF" : "0123456789abcdef";
-	if (num == 0 && (all_mod->spc == 'i' || all_mod->spc == 'd') && all_mod->width >= 0 && all_mod->prc == 0 && all_mod->check_prec == 1)
+	if (num == 0 && (all_mod->spc == 'i' || all_mod->spc == 'd') && \
+	all_mod->width >= 0 && all_mod->prc == 0 && all_mod->check_prec == 1)
 	{
-		if ((all_mod->f_min != '-' && all_mod->width > 1 && all_mod->prc != 0) || (all_mod->f_min == '-' && all_mod->f_pl == '+'))
-			write(1, " ", 1);
-		(all_mod->width == 0) ? all_mod->res-- : 0;
-		return;
+		ft_helper_id(all_mod);
+		return ;
 	}
-	if (all_mod->len == 4)
-	{
-		i = num;
-		i < 0 ? i *= -1 : i;
-		while ((dec * base < i) && (dec * base > 0))
-			dec *= base;
+	if (all_mod->len == 4 && (dec = ft_helper(num, base)))
 		num < 0 ? num *= -1 : 0;
-	}
 	else
-	{
 		while ((dec * base < num) && dec < dec * base && (dec * base > 0))
 			dec *= base;
-	}
 	while (dec > 0)
 	{
-		if ((curr = num / dec) == base)
-			write(1, "10", 2);
-		else
-			write(1, &base_string[curr], 1);
+		((curr = num / dec) == base) ? write(1, "10", 2) : \
+		write(1, &base_string[curr], 1);
 		num %= dec;
 		dec /= base;
 	}
 }
 
-void			ft_num(t_flag *all_mod, unsigned long long num, int base, int len)
+void			ft_num(t_flag *all_mod, unsigned long long num, int base, \
+int len)
 {
 	if (all_mod->f_sh == '#' && num != 0)
 		ft_sharp(all_mod, len);

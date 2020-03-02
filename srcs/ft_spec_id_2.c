@@ -6,7 +6,7 @@
 /*   By: mleticia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 20:01:22 by mleticia          #+#    #+#             */
-/*   Updated: 2020/03/01 19:19:45 by mleticia         ###   ########.fr       */
+/*   Updated: 2020/03/02 18:29:50 by mleticia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	to_spec_id(t_flag *all_mod, int len)
 	}
 }
 
-void 	ft_negative(t_flag *all_mod, char *sign, int len)
+void	ft_negative(t_flag *all_mod, char *sign, int len)
 {
 	if ((all_mod->prc <= len && all_mod->f_pl != '+') || (all_mod->f_pl == '+' \
 	&& all_mod->f_0 == 'N' && (*sign == '-') && all_mod->prc < len) || \
@@ -36,7 +36,7 @@ void 	ft_negative(t_flag *all_mod, char *sign, int len)
 	if (*sign == '-')
 		write(1, sign, 1);
 	else if (all_mod->f_pl == '+')
-		write (1, "+", 1);
+		write(1, "+", 1);
 	((*sign == '-') && all_mod->f_pl == '+') ? (all_mod->res += \
 	ft_wx(all_mod->prc - len + 2, '0')) : (all_mod->res += \
 	ft_wx(all_mod->prc - len + 1, '0'));

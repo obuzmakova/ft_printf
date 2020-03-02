@@ -7,8 +7,8 @@ OBJ_DIR = obj/
 LIB_DIR = libft/
 
 SRC = ft_findfunction.c ft_genparser.c ft_parser.c ft_spec_c.c ft_spec_s.c ft_spec_p.c ft_spec_x.c ft_spec_f.c \
-put_and_width_x.c ft_spec_id.c ft_spec_id_2.c float_1.c float_2.c ft_printf.c color.c spec_k.c ft_spec_id_1.c \
-spec_r.c
+put_and_width_x.c ft_spec_id.c ft_spec_id_2.c float_1.c float_2.c ft_printf.c color.c spec_k.c ft_spec_id_1.c spec_r.c \
+ft_helper_out.c
 
 OBJ = $(patsubst %.c, %.o, $(SRC))
 HEADER = includes

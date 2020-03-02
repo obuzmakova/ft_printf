@@ -12,10 +12,18 @@
 
 #include "../includes/ft_printf.h"
 
-void		ft_sign(t_flag *all_mod, char *sign)
+int			ft_check(t_flag *all_mod, long long nbr)
 {
-	(!(ft_memchr("di", (int)all_mod->spc, 2) && all_mod->width > 0 \
-	&& all_mod->width > all_mod->prc)) ? write(1, sign, 1) : 0;
+	if ((all_mod->spc == 'x' || all_mod->spc == 'X') && nbr != 0 \
+	&& all_mod->f_sh == '#')
+		return (2);
+	if (all_mod->spc == 'o' && nbr != 0 && all_mod->f_sh == '#')
+		return (1);
+	if (all_mod->f_pl == '+' && nbr < 0 && all_mod->prc == -1)
+		return (0);
+	if (all_mod->f_pl == '+')
+		return (1);
+	return (0);
 }
 
 void		ft_zero(t_flag *all_mod)

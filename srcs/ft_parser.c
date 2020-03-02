@@ -54,7 +54,7 @@ int	ft_wid_and_prec(va_list all_arg, t_flag *all_mod)
 
 	check_prec = 0;
 	if (all_mod->format[all_mod->i] == '*' &&
-	all_mod->format[all_mod->i + 1] == '.')
+		all_mod->format[all_mod->i + 1] == '.')
 	{
 		all_mod->width = (int)va_arg(all_arg, int);
 		all_mod->i++;

@@ -6,34 +6,40 @@
 /*   By: mleticia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 20:01:22 by mleticia          #+#    #+#             */
-/*   Updated: 2020/03/02 15:41:42 by mleticia         ###   ########.fr       */
+/*   Updated: 2020/03/02 18:29:06 by mleticia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
-void ft_space(t_flag *all_mod, char *sign, int len)
+void		ft_space(t_flag *all_mod, char *sign, int len)
 {
-	if (((*sign != '-') && all_mod->f_pl != '+' && all_mod->width <= len && all_mod->prc == -1) \
-	|| (all_mod->f_sp == 'S' && (*sign != '-') && all_mod->f_min == '-'))
+	if (((*sign != '-') && all_mod->f_pl != '+' && all_mod->width <= len && \
+	all_mod->prc == -1) || (all_mod->f_sp == 'S' && (*sign != '-') && \
+	all_mod->f_min == '-'))
 		all_mod->res += ft_wx(1, ' ');
-	else if (all_mod->prc >= len && all_mod->f_pl != '+' && all_mod->width == 0 && (*sign != '-'))
+	else if (all_mod->prc >= len && all_mod->f_pl != '+' && all_mod->width == 0\
+	&& (*sign != '-'))
 		all_mod->res += ft_wx(1, ' ');
-	else if (all_mod->prc < len && all_mod-> prc > 0 && all_mod->width == 0 && (*sign != '-') && all_mod->f_min != '-' && all_mod->f_pl != '+')
+	else if (all_mod->prc < len && all_mod->prc > 0 && all_mod->width == 0 && \
+	(*sign != '-') && all_mod->f_min != '-' && all_mod->f_pl != '+')
 		all_mod->res += ft_wx(1, ' ');
-	else if (all_mod->f_0 == 'N' && (*sign != '-') && all_mod->f_pl != '+' && all_mod->prc == -1)
+	else if (all_mod->f_0 == 'N' && (*sign != '-') && all_mod->f_pl != '+' && \
+	all_mod->prc == -1)
 		all_mod->res += ft_wx(1, ' ');
 	else if (all_mod->width < len && (*sign != '-') && all_mod->f_pl != '+')
 		all_mod->res += ft_wx(1, ' ');
-	else if (all_mod->width < all_mod->prc && all_mod->prc > 0 && all_mod->width > len && all_mod->f_pl == '0' && all_mod->f_min == '0' && all_mod->f_sh == '0' && all_mod->f_pl == '0')
+	else if (all_mod->width < all_mod->prc && all_mod->prc > 0 && all_mod->width
+	> len && all_mod->f_pl == '0' && all_mod->f_min == '0' && \
+	all_mod->f_sh == '0' && all_mod->f_pl == '0')
 		all_mod->res += ft_wx(1, ' ');
 	else
-		return;
+		return ;
 }
 
-int count_for_len_llu(unsigned long long nbr, int base)
+int			count_for_len_llu(unsigned long long nbr, int base)
 {
-	int count;
+	int	count;
 
 	count = 0;
 	while (nbr > 0)
@@ -44,7 +50,29 @@ int count_for_len_llu(unsigned long long nbr, int base)
 	return (count);
 }
 
-void ft_llu(t_flag *all_mod, unsigned long long num, int base, int len)
+void		check_zero(t_flag *all_mod, char *sign, int len)
+{
+	if (*sign == '-')
+		ft_negative(all_mod, sign, len);
+	else if (all_mod->width > all_mod->prc && all_mod->prc > len)
+		all_mod->res += ft_wx(all_mod->width - all_mod->prc, ' ');
+	else if (all_mod->width > all_mod->prc && all_mod->prc < len)
+		all_mod->res += ft_wx(all_mod->width - len, ' ');
+	else
+		all_mod->res += ft_wx(all_mod->width - len, '0');
+	(*sign != '-') ? all_mod->res += ft_wx(all_mod->prc - len, '0') : 0;
+}
+
+void		ft_sign_dig(t_flag *all_mod, char *sign, int len)
+{
+	if ((all_mod->width <= all_mod->prc && (all_mod->prc > len || \
+	(all_mod->f_0 == 'N'))) || ((all_mod->prc == -1 && all_mod->f_0 == 'N')))
+		write(1, sign, 1);
+	else if (all_mod->f_min == '-' && (*sign == '-'))
+		write(1, sign, 1);
+}
+
+void		ft_llu(t_flag *all_mod, unsigned long long num, int base, int len)
 {
 	char	*base_string;
 	size_t	dec;
@@ -52,15 +80,12 @@ void ft_llu(t_flag *all_mod, unsigned long long num, int base, int len)
 
 	dec = 1;
 	base_string = "0123456789abcdef";
+	all_mod->res += len;
 	if (all_mod->width > len && all_mod->f_min != '-')
-	{
-		if (all_mod->f_0 == 'N')
-			all_mod->res += ft_wx(all_mod->width - len, '0');
-		else
-			all_mod->res += ft_wx(all_mod->width - len, ' ');
-	}
+		(all_mod->f_0 == 'N') ? (all_mod->res += ft_wx(all_mod->width - len,
+				'0')) : (all_mod->res += ft_wx(all_mod->width - len, ' '));
 	if (all_mod->prc > len && all_mod->check_prec == 1)
-			all_mod->res += ft_wx(all_mod->prc - len, '0');
+		all_mod->res += ft_wx(all_mod->prc - len, '0');
 	while ((dec * base < num) && dec < dec * base && (dec * base > 0))
 		dec *= base;
 	while (dec > 0)
