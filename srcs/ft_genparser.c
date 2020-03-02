@@ -6,13 +6,13 @@
 /*   By: soyster <soyster@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 00:57:33 by soyster           #+#    #+#             */
-/*   Updated: 2020/02/29 00:31:53 by mleticia         ###   ########.fr       */
+/*   Updated: 2020/03/02 20:44:41 by mleticia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
-int		ft_flags(va_list all_arg, t_flag *all_mod)
+int		ft_flags(t_flag *all_mod)
 {
 	while (all_mod->format[all_mod->i] == '#' || \
 	all_mod->format[all_mod->i] == '0' || all_mod->format[all_mod->i] == '-' \
@@ -33,7 +33,7 @@ int		ft_flags(va_list all_arg, t_flag *all_mod)
 	return (0);
 }
 
-int		ft_write_befpercent(va_list all_arg, t_flag *all_mod)
+int		ft_write_befpercent(t_flag *all_mod)
 {
 	while (all_mod->format[all_mod->i] && all_mod->format[all_mod->i] != '%')
 	{
@@ -55,7 +55,7 @@ int		ft_write_befpercent(va_list all_arg, t_flag *all_mod)
 	return (0);
 }
 
-void	ft_fill_struct(t_flag *all_mod, char *format, size_t len)
+void	ft_fill_struct(t_flag *all_mod, char *format)
 {
 	all_mod->format = format;
 	all_mod->i = 0;
@@ -91,16 +91,16 @@ int		ft_gen_parser(va_list all_arg, char *format)
 	t_flag	all_mod;
 	int		res;
 
-	ft_fill_struct(&all_mod, format, ft_strlen(format));
+	ft_fill_struct(&all_mod, format);
 	while (all_mod.format[all_mod.i] != '\0')
 	{
-		ft_write_befpercent(all_arg, &all_mod);
+		ft_write_befpercent(&all_mod);
 		if (!(all_mod.format[all_mod.i]))
 			return (all_mod.res);
-		ft_flags(all_arg, &all_mod);
+		ft_flags(&all_mod);
 		ft_wid_and_prec(all_arg, &all_mod);
-		ft_length(all_arg, &all_mod);
-		ft_spec(all_arg, &all_mod);
+		ft_length(&all_mod);
+		ft_spec(&all_mod);
 		ft_function(all_arg, &all_mod);
 		ft_eoc(&all_mod);
 		ft_free_allmod(&all_mod);

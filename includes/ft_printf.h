@@ -6,7 +6,7 @@
 /*   By: soyster <soyster@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 01:18:14 by soyster           #+#    #+#             */
-/*   Updated: 2020/03/02 19:26:28 by mleticia         ###   ########.fr       */
+/*   Updated: 2020/03/02 20:42:03 by mleticia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,9 +113,9 @@ int				ft_spec_c(va_list all_arg, t_flag *all_mod);
 int				ft_width(t_flag *all_mod, int len);
 void			ft_free_allmod(t_flag *all_mod);
 int				ft_spec_p(t_flag *all_mod, long long num, int len);
-int				ft_length(va_list all_arg, t_flag *all_mod);
-int				ft_spec(va_list all_arg, t_flag *all_mod);
-int				ft_flags(va_list all_arg, t_flag *all_mod);
+int				ft_length(t_flag *all_mod);
+int				ft_spec(t_flag *all_mod);
+int				ft_flags(t_flag *all_mod);
 int				ft_wid_and_prec(va_list all_arg, t_flag *all_mod);
 int				ft_printf(const char *format, ...);
 void			ft_x(t_flag *all_mod, unsigned long long num, int base,

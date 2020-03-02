@@ -6,7 +6,7 @@
 /*   By: soyster <soyster@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 00:57:33 by soyster           #+#    #+#             */
-/*   Updated: 2020/03/01 23:00:51 by soyster          ###   ########.fr       */
+/*   Updated: 2020/03/02 20:42:21 by mleticia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,6 @@ int	ft_wid_prec(t_flag *all_mod)
 
 int	ft_wid_and_prec(va_list all_arg, t_flag *all_mod)
 {
-	int check_prec;
-
-	check_prec = 0;
 	if (all_mod->format[all_mod->i] == '*' &&
 		all_mod->format[all_mod->i + 1] == '.')
 	{
@@ -70,7 +67,7 @@ int	ft_wid_and_prec(va_list all_arg, t_flag *all_mod)
 	return (0);
 }
 
-int	ft_length(va_list all_arg, t_flag *all_mod)
+int	ft_length(t_flag *all_mod)
 {
 	while (all_mod->format[all_mod->i] == 'h' || all_mod->format[all_mod->i] \
 	== 'l' || all_mod->format[all_mod->i] == 'L')
@@ -96,7 +93,7 @@ int	ft_length(va_list all_arg, t_flag *all_mod)
 	return (0);
 }
 
-int	ft_spec(va_list all_arg, t_flag *all_mod)
+int	ft_spec(t_flag *all_mod)
 {
 	all_mod->spc = all_mod->format[all_mod->i];
 	if (all_mod->spc != 'c' && all_mod->spc != 's' && all_mod->spc != 'd'

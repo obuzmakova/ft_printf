@@ -6,7 +6,7 @@
 /*   By: soyster <soyster@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 01:18:14 by soyster           #+#    #+#             */
-/*   Updated: 2020/02/27 17:03:20 by soyster          ###   ########.fr       */
+/*   Updated: 2020/03/02 20:52:33 by mleticia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ int		ft_len_whole(long num_start)
 
 int		ft_rounding(t_float *fl)
 {
-	int a;
-
 	fl->frt[fl->i] = fl->frt[fl->i] + 1;
 	if (fl->frt[fl->i] == 10)
 	{
@@ -63,7 +61,8 @@ void	ft_spec_f(va_list all_arg, t_flag *all_mod)
 {
 	t_float	*fl;
 
-	fl = malloc(sizeof(t_float));
+	if (!(fl = malloc(sizeof(t_float))))
+		return ;
 	ft_fill_fl(fl);
 	if (all_mod->len == 5)
 		fl->f = va_arg(all_arg, long double);

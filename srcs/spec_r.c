@@ -14,7 +14,6 @@
 
 void	ft_spec_r(va_list all_arg, t_flag *all_mod)
 {
-	char	*src;
 	t_np	np;
 
 	np.src = va_arg(all_arg, char *);

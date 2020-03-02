@@ -44,7 +44,8 @@ void	ft_separ_fl(t_float *fl, t_flag *all_mod)
 
 void	ft_fill_frt(t_float *fl, t_flag *all_mod)
 {
-	fl->frt = (int*)malloc((all_mod->prc + 1) * sizeof(int));
+	if (!(fl->frt = (int*)malloc((all_mod->prc + 1) * sizeof(int))))
+		return ;
 	if (all_mod->prc == 0)
 		fl->frt[fl->i] = (int)(fl->n_ed * 10);
 	while (fl->i < all_mod->prc)
