@@ -6,7 +6,7 @@
 /*   By: mleticia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 20:01:22 by mleticia          #+#    #+#             */
-/*   Updated: 2020/03/02 19:05:16 by mleticia         ###   ########.fr       */
+/*   Updated: 2020/03/03 12:04:41 by mleticia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ void			ft_put_dec(t_flag *all_mod, __int128_t num, int base)
 		ft_helper_id(all_mod);
 		return ;
 	}
-	if (all_mod->len == 4 && (dec = ft_helper(num, base)))
+	if ((all_mod->len == 4 || all_mod->len == 3) && \
+	(dec = ft_helper(num, base)))
 		num < 0 ? num *= -1 : 0;
 	else
 		while ((dec * base < num) && dec < dec * base && (dec * base > 0))

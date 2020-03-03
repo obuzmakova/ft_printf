@@ -6,7 +6,7 @@
 /*   By: mleticia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 20:01:22 by mleticia          #+#    #+#             */
-/*   Updated: 2020/03/02 18:29:06 by mleticia         ###   ########.fr       */
+/*   Updated: 2020/03/03 20:45:20 by mleticia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ void		check_zero(t_flag *all_mod, char *sign, int len)
 		ft_negative(all_mod, sign, len);
 	else if (all_mod->width > all_mod->prc && all_mod->prc > len)
 		all_mod->res += ft_wx(all_mod->width - all_mod->prc, ' ');
+	else if (all_mod->width > all_mod->prc && all_mod->prc < -1)
+		all_mod->res += ft_wx(all_mod->width - len, '0');
 	else if (all_mod->width > all_mod->prc && all_mod->prc < len)
 		all_mod->res += ft_wx(all_mod->width - len, ' ');
 	else
@@ -79,21 +81,20 @@ void		ft_llu(t_flag *all_mod, unsigned long long num, int base, int len)
 	int		curr;
 
 	dec = 1;
-	base_string = "0123456789abcdef";
+	base_string = all_mod->spc == 'X' ? "0123456789ABCDEF" : "0123456789abcdef";
 	all_mod->res += len;
-	if (all_mod->width > len && all_mod->f_min != '-')
-		(all_mod->f_0 == 'N') ? (all_mod->res += ft_wx(all_mod->width - len,
-				'0')) : (all_mod->res += ft_wx(all_mod->width - len, ' '));
-	if (all_mod->prc > len && all_mod->check_prec == 1)
-		all_mod->res += ft_wx(all_mod->prc - len, '0');
+	(num == 0) ? all_mod->res += 1 : 0;
+	ft_helper_ll(all_mod, len);
+	(all_mod->spc == 'x' && all_mod->f_sh == '#' && all_mod->f_0 == '0') ? \
+	write(1, "0x", 2) : 0;
+	(all_mod->spc == 'X' && all_mod->f_sh == '#' && all_mod->f_0 == '0') ? \
+	write(1, "0X", 2) : 0;
 	while ((dec * base < num) && dec < dec * base && (dec * base > 0))
 		dec *= base;
 	while (dec > 0)
 	{
-		if ((curr = num / dec) == base)
-			write(1, "10", 2);
-		else
-			write(1, &base_string[curr], 1);
+		((curr = num / dec) == base) ? write(1, "10", 2) :\
+		write(1, &base_string[curr], 1);
 		num %= dec;
 		dec /= base;
 	}

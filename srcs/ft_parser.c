@@ -6,7 +6,7 @@
 /*   By: soyster <soyster@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 00:57:33 by soyster           #+#    #+#             */
-/*   Updated: 2020/03/02 20:42:21 by mleticia         ###   ########.fr       */
+/*   Updated: 2020/03/03 19:09:46 by mleticia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,11 @@ int	ft_length(t_flag *all_mod)
 
 int	ft_spec(t_flag *all_mod)
 {
+	if (ft_isdigit(all_mod->format[all_mod->i]))
+	{
+		all_mod->prc = all_mod->i;
+		all_mod->i++;
+	}
 	all_mod->spc = all_mod->format[all_mod->i];
 	if (all_mod->spc != 'c' && all_mod->spc != 's' && all_mod->spc != 'd'
 		&& all_mod->spc != 'i' && all_mod->spc != 'u' && all_mod->spc != 'b'

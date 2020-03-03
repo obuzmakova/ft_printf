@@ -6,7 +6,7 @@
 /*   By: soyster <soyster@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 00:57:33 by soyster           #+#    #+#             */
-/*   Updated: 2020/03/03 12:54:08 by soyster          ###   ########.fr       */
+/*   Updated: 2020/03/03 15:13:11 by mleticia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,6 @@ int		ft_write_befpercent(t_flag *all_mod)
 			ft_eoc(all_mod);
 		}
 		if (all_mod->format[all_mod->i] != '%' && !ft_color_check(all_mod))
-		//(all_mod->format[all_mod->i]
-		//== '}' || (all_mod->format[all_mod->i] == '{' &&
-		//ft_strncmp_st(all_mod->format, all_mod->i, "{eoc}", 5))))
 		{
 			write(1, &(all_mod->format[all_mod->i]), 1);
 			all_mod->i++;

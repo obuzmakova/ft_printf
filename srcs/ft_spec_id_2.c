@@ -6,7 +6,7 @@
 /*   By: mleticia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 20:01:22 by mleticia          #+#    #+#             */
-/*   Updated: 2020/03/02 18:29:50 by mleticia         ###   ########.fr       */
+/*   Updated: 2020/03/03 20:13:23 by mleticia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,13 @@ void	to_spec_id(t_flag *all_mod, int len)
 
 void	ft_negative(t_flag *all_mod, char *sign, int len)
 {
-	if ((all_mod->prc <= len && all_mod->f_pl != '+') || (all_mod->f_pl == '+' \
-	&& all_mod->f_0 == 'N' && (*sign == '-') && all_mod->prc < len) || \
-	(all_mod->f_pl == '+' && all_mod->f_0 == 'N' && (*sign != '-') && \
-	all_mod->prc < len))
+	if (all_mod->spc == 'd' && all_mod->prc > 0 && len > all_mod->prc && \
+	all_mod->width > len && all_mod->f_0 == '0' && all_mod->f_sh == '0')
+		all_mod->res += ft_wx(all_mod->width - len, ' ');
+	else if ((all_mod->prc <= len && all_mod->f_pl != '+') || \
+	(all_mod->f_pl == '+' && all_mod->f_0 == 'N' && (*sign == '-') && \
+	all_mod->prc < len) || (all_mod->f_pl == '+' && all_mod->f_0 == 'N' \
+	&& (*sign != '-') && all_mod->prc < len))
 		all_mod->res += ft_wx(all_mod->width - all_mod->prc - 2, ' ');
 	else
 		all_mod->res += ft_wx(all_mod->width - all_mod->prc - 1, ' ');

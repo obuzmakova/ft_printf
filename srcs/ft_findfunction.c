@@ -6,7 +6,7 @@
 /*   By: mleticia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 20:01:22 by mleticia          #+#    #+#             */
-/*   Updated: 2020/03/02 16:52:21 by mleticia         ###   ########.fr       */
+/*   Updated: 2020/03/03 19:46:56 by mleticia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,12 @@
 static size_t		count_for_len(__int128_t nbr, int base, t_flag *all_mod)
 {
 	int				count;
-	__int128_t		copy;
 	__int128_t		spec;
 
 	count = 0;
 	spec = nbr;
-	copy = nbr;
-	if (all_mod->spc == 'u' && (all_mod->len == 3 || all_mod->len == 4))
+	if (ft_memchr("ouxX", (int)all_mod->spc, 4) && \
+	(all_mod->len == 3 || all_mod->len == 4))
 	{
 		count = count_for_len_llu(nbr, base);
 		return (count);
@@ -34,7 +33,7 @@ static size_t		count_for_len(__int128_t nbr, int base, t_flag *all_mod)
 		count += 1;
 	}
 	if (all_mod->f_sh == '#')
-		(copy != 0) ? count += ft_check(all_mod, spec) : 0;
+		(spec != 0) ? count += ft_check(all_mod, spec) : 0;
 	(all_mod->f_pl == '+' && all_mod->spc != 'u') ? \
 	count += ft_check(all_mod, spec) : 0;
 	all_mod->res = all_mod->res + count;
@@ -102,7 +101,8 @@ static int			*ft_base(va_list all_arg, t_flag *all_mod, int base)
 	else
 		sign = nbr >= 0 ? "0" : "-";
 	len = count_for_len(nbr, base, all_mod);
-	if (all_mod->spc == 'u' && (all_mod->len == 3 || all_mod->len == 4))
+	if (ft_memchr("ouxX", (int)all_mod->spc, 4) && \
+	(all_mod->len == 3 || all_mod->len == 4))
 	{
 		ft_llu(all_mod, nbr, base, len);
 		return (0);
@@ -114,8 +114,7 @@ static int			*ft_base(va_list all_arg, t_flag *all_mod, int base)
 		all_mod->width > 0 && all_mod->width > all_mod->prc))) ? \
 		write(1, sign, 1) : 0;
 	}
-	(ft_memchr("uboXxpid", (int)all_mod->spc, 8)) ? \
-	ft_next_for_def(all_mod, sign, nbr, len) : 0;
+	ft_next_for_def(all_mod, sign, nbr, len);
 	return (0);
 }
 
