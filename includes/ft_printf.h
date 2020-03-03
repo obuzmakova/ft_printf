@@ -6,7 +6,7 @@
 /*   By: soyster <soyster@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 01:18:14 by soyster           #+#    #+#             */
-/*   Updated: 2020/03/02 20:42:03 by mleticia         ###   ########.fr       */
+/*   Updated: 2020/03/03 12:57:19 by soyster          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ typedef struct	s_np
 	int		i;
 }				t_np;
 
+int				ft_color_check_2(t_flag *all_mod);
+int				ft_color_check(t_flag *all_mod);
 void			ft_helper_id(t_flag *all_mod);
 __int128_t		ft_helper(__int128_t num, int base);
 void			check_zero(t_flag *all_mod, char *sign, int len);
@@ -78,7 +80,7 @@ void			ft_digit(t_flag *all_mod, char *sign, long long num, int len);
 void			ft_spec_k(va_list all_arg, t_flag *all_mod);
 void			ft_color_2(t_flag *all_mod);
 void			ft_eoc(t_flag *all_mod);
-void			ft_color(t_flag *all_mod);
+int				ft_color(t_flag *all_mod);
 int				ft_strncmp_st(const char *s1, int k, const char *s2, int n);
 int				ft_gen_parser(va_list all_arg, char *format);
 int				ft_c(int prc, char s);
