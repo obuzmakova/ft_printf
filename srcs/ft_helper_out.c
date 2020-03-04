@@ -44,8 +44,8 @@ void		ft_helper_sign(t_flag *all_mod, char *sign, int len)
 
 void		ft_digit2_part2(t_flag *all_mod, int len)
 {
-	(all_mod->f_0 == 'N') ? (all_mod->res += ft_wx(all_mod->prc - len, \
-	'0')) : (all_mod->res += ft_wx(all_mod->prc - len, ' '));
+	(all_mod->f_0 == 'N') ? (all_mod->res += ft_wx(all_mod->width - len, \
+	'0')) : (all_mod->res += ft_wx(all_mod->width - len, ' '));
 }
 
 void		ft_helper_ll(t_flag *all_mod, int len)

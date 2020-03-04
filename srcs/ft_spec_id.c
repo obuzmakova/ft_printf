@@ -6,7 +6,7 @@
 /*   By: mleticia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 20:01:22 by mleticia          #+#    #+#             */
-/*   Updated: 2020/03/03 20:26:44 by mleticia         ###   ########.fr       */
+/*   Updated: 2020/03/04 14:57:22 by mleticia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,10 +110,10 @@ static void	ft_digit_2(t_flag *all_mod, char *sign, long long num, int len)
 	else if (all_mod->f_pl == '+')
 		to_spec_plus(all_mod, len);
 	ft_put_dec(all_mod, num, 10);
-	if (all_mod->check_prec == 0 && all_mod->prc < -1)
+	if (all_mod->check_prec == 0 && all_mod->width < 0)
 	{
-		(all_mod->prc < 0) ? all_mod->prc *= -1 : 0;
-		(all_mod->prc > len) ? ft_digit2_part2(all_mod, len) : 0;
+		(all_mod->width < 0) ? all_mod->width *= -1 : 0;
+		(all_mod->width > len) ? ft_digit2_part2(all_mod, len) : 0;
 	}
 	(all_mod->f_sp == 'S' && num == 0 && all_mod->f_pl == '+' && \
 	all_mod->f_min != '-' && all_mod->f_0 == 'N' && ((all_mod->width - \
