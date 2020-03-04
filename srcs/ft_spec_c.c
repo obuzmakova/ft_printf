@@ -6,7 +6,7 @@
 /*   By: soyster <soyster@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 01:18:14 by soyster           #+#    #+#             */
-/*   Updated: 2020/03/02 22:25:22 by mleticia         ###   ########.fr       */
+/*   Updated: 2020/03/04 15:53:50 by soyster          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,11 @@ int		ft_spec_c(va_list all_arg, t_flag *all_mod)
 	char	c;
 
 	c = (char)va_arg(all_arg, int);
+	if (all_mod->width < 0)
+	{
+		all_mod->width = all_mod->width * (-1);
+		all_mod->f_min = '-';
+	}
 	if (all_mod->f_min == '-')
 		ft_putchar(c);
 	ft_width(all_mod, 1);

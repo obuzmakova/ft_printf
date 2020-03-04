@@ -6,7 +6,7 @@
 /*   By: soyster <soyster@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 13:08:47 by soyster           #+#    #+#             */
-/*   Updated: 2020/02/27 16:15:36 by soyster          ###   ########.fr       */
+/*   Updated: 2020/03/04 15:15:35 by soyster          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int		ft_act_width(t_float *fl, t_flag *all_mod)
 {
 	int	act_width;
 
-	act_width = fl->len_wh +
+	act_width = ft_len_whole(fl->n_st) +
 	(all_mod->prc != 0 ? +all_mod->prc : +0) + (all_mod->prc != 0 ? +1 : +0)
 	+ ((fl->ch_s == 1 || all_mod->f_pl == '+') ? +1 : +0)
 	+ ((all_mod->f_sh == '#' && all_mod->prc == 0) ? +1 : +0)
@@ -38,7 +38,7 @@ void	ft_print_sp(t_float *fl, t_flag *all_mod)
 	if (all_mod->width)
 	{
 		fl->len_wh = ft_len_whole(fl->n_st);
-		while (--all_mod->width > act_width)
+		while (--all_mod->width >= act_width)
 		{
 			if (all_mod->f_0 != 'N' || (all_mod->f_0 == 'N'
 			&& all_mod->f_min == '-'))
